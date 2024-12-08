@@ -1,9 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Statik" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/n_gray</item>
+        <item name="android:navigationBarColor">@color/l_bot_nav</item>
+        <item name="android:windowLightStatusBar">true</item>
+        
+        <item name="colorAccent">@color/l_dark</item>
     </style>
 
     <style name="Theme.Statik" parent="Base.Theme.Statik" />
+
+    <style name="ThemeBackgroundScreen">
+        <item name="background">@color/l_light</item>
+    </style>
+    <style name="ThemeText">
+        <item name="background">@color/l_dark</item>
+    </style>
+    <style name="ThemeCard">
+        <item name="backgroundTint">@color/l_card</item>
+    </style>
+    <style name="ThemeMainGray">
+        <item name="android:backgroundTint">@color/l_gray</item>
+    </style>
+    <style name="ThemeBotNav">
+        <item name="backgroundTint">@color/l_bot_nav</item>
+    </style>
+    <style name="ThemeFilter">
+        <item name="backgroundTint">@color/l_filter</item>
+    </style>
 </resources>

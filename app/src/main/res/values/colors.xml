@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="accent">#F2C788</color>
+
+    //dark
+    <color name="n_dark">#242424</color>
+    <color name="n_gray">#383939</color>
+    <color name="n_bot_nav">#424A4C</color>
+    <color name="n_card">#514E49</color>
+    <color name="n_light">#E8EAED</color>
+    <color name="n_filter">#D9D9D9</color>
+
+    //light
+    <color name="l_light">#FCF5EB</color>
+    <color name="l_gray">#E4E5E8</color>
+    <color name="l_bot_nav">#A8AFAF</color>
+    <color name="l_card">#EDEAE6</color>
+    <color name="l_dark">#242424</color>
+    <color name="l_filter">#333333</color>
 </resources>

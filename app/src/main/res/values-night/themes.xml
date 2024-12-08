@@ -1,7 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Statik" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">@color/n_gray</item>
+        <item name="android:navigationBarColor">@color/n_bot_nav</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="colorAccent">@color/n_light</item>
+    </style>
+
+    <style name="ThemeBackgroundScreen">
+        <item name="background">@color/n_light</item>
+    </style>
+    <style name="ThemeText">
+        <item name="background">@color/n_dark</item>
+    </style>
+    <style name="ThemeCard">
+        <item name="backgroundTint">@color/n_card</item>
+    </style>
+    <style name="ThemeMainGray">
+        <item name="android:backgroundTint">@color/n_gray</item>
+    </style>
+    <style name="ThemeBotNav">
+        <item name="backgroundTint">@color/n_bot_nav</item>
+    </style>
+    <style name="ThemeFilter">
+        <item name="backgroundTint">@color/n_filter</item>
+    </style>
+    <style name="ThemeIcon">
+        <item name="android:fillColor">@color/n_light</item>
     </style>
 </resources>

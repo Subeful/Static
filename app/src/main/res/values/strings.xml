@@ -1,3 +1,56 @@
 <resources>
     <string name="app_name">Statik</string>
+
+    //bottom navigation
+    <string name="nav_statistic">Статистика</string>
+    <string name="nav_global">Главная</string>
+    <string name="nav_settings">Настройки</string>
+
+    //system
+    <string name="system_start">Начать</string>
+    <string name="system_category">Категория</string>
+    <string name="system_period">Период</string>
+    <string name="system_edit">Изменить</string>
+    <string name="system_complete">Готово</string>
+
+    //settings
+    <string name="set_habit">Привычки</string>
+        <string name="set_habit_activate">Активные</string>
+        <string name="set_habit_archive">Архив</string>
+
+    <string name="set_custom">Кастомизация</string>
+        <string name="set_custom_theme">Тема</string>
+            <string name="set_custom_theme_light">Светлая</string>
+            <string name="set_custom_theme_dark">Тёмная</string>
+            <string name="set_custom_theme_sustem">Системная</string>
+
+        <string name="set_custom_color_design">Цветовое оформление</string>
+
+        <string name="set_custom_language">Язык</string>
+            <string name="set_custom_language_rus">Русский</string>
+            <string name="set_custom_language_en">English</string>
+
+        <string name="set_custom_notify">Уведомления</string>
+            <string name="set_custom_notify_turn_on">Включить уведомления</string>
+            <string name="set_custom_notify_time">Время Уведомлений</string>
+            <string name="set_custom_notify_settings">Настройки уведомлений</string>
+
+    <string name="set_service">Сервис</string>
+        <string name="set_service_feedback">Обратная связь</string>
+        <string name="set_service_rating">Оценить приложение</string>
+        <string name="set_service_share">Поделиться приложением</string>
+
+    //habit
+    <string name="habit_water">Вода</string>
+    <string name="habit_steps">Шаги</string>
+    <string name="habit_words">Слова</string>
+    <string name="habit_weather">Погода</string>
+    <string name="habit_mood">Настроение</string>
+    <string name="habit_productivity">Продуктивность</string>
+    <string name="habit_sleep">Сон</string>
+    <string name="habit_sport">Спорт</string>
+    <string name="habit_screen_time">Экранное Время</string>
+    <string name="habit_cost">Расходы</string>
+    <string name="habit_comment">Комментарий</string>
+
 </resources>
