@@ -2,30 +2,32 @@
     <style name="Base.Theme.Statik" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/n_gray</item>
         <item name="android:navigationBarColor">@color/n_bot_nav</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <item name="colorAccent">@color/n_light</item>
     </style>
 
-    <style name="ThemeBackgroundScreen">
+    <style name="MyThemeBackgroundScreen">
         <item name="background">@color/n_light</item>
     </style>
-    <style name="ThemeText">
-        <item name="background">@color/n_dark</item>
+    <style name="MyThemeText">
+        <item name="android:textColor">@color/n_light</item>
     </style>
-    <style name="ThemeCard">
+    <style name="MyThemeCard">
         <item name="backgroundTint">@color/n_card</item>
     </style>
-    <style name="ThemeMainGray">
+    <style name="MyThemeMainGray">
         <item name="android:backgroundTint">@color/n_gray</item>
     </style>
-    <style name="ThemeBotNav">
+    <style name="MyThemeBotNav">
         <item name="backgroundTint">@color/n_bot_nav</item>
     </style>
-    <style name="ThemeFilter">
+    <style name="MyThemeFilter">
         <item name="backgroundTint">@color/n_filter</item>
+        <item name="android:textColor">@color/n_dark</item>
     </style>
-    <style name="ThemeIcon">
+    <style name="MyThemeIcon">
         <item name="android:fillColor">@color/n_light</item>
     </style>
+
 </resources>

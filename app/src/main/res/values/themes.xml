@@ -2,29 +2,30 @@
     <style name="Base.Theme.Statik" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/n_gray</item>
         <item name="android:navigationBarColor">@color/l_bot_nav</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         
         <item name="colorAccent">@color/l_dark</item>
     </style>
 
     <style name="Theme.Statik" parent="Base.Theme.Statik" />
 
-    <style name="ThemeBackgroundScreen">
+    <style name="MyThemeBackgroundScreen">
         <item name="background">@color/l_light</item>
     </style>
-    <style name="ThemeText">
-        <item name="background">@color/l_dark</item>
+    <style name="MyThemeText">
+        <item name="android:textColor">@color/l_dark</item>
     </style>
-    <style name="ThemeCard">
+    <style name="MyThemeCard">
         <item name="backgroundTint">@color/l_card</item>
     </style>
-    <style name="ThemeMainGray">
+    <style name="MyThemeMainGray">
         <item name="android:backgroundTint">@color/l_gray</item>
     </style>
-    <style name="ThemeBotNav">
+    <style name="MyThemeBotNav">
         <item name="backgroundTint">@color/l_bot_nav</item>
     </style>
-    <style name="ThemeFilter">
+    <style name="MyThemeFilter">
         <item name="backgroundTint">@color/l_filter</item>
+        <item name="android:textColor">@color/l_light</item>
     </style>
 </resources>

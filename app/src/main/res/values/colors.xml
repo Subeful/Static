@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="accent">#F2C788</color>
+    <color name="transparent">#00FFFFFF</color>
 
     //dark
     <color name="n_dark">#242424</color>
@@ -15,8 +16,8 @@
 
     //light
     <color name="l_light">#FCF5EB</color>
-    <color name="l_gray">#E4E5E8</color>
-    <color name="l_bot_nav">#A8AFAF</color>
+    <color name="l_gray">#D9DBDE</color>
+    <color name="l_bot_nav">#A4B7B7</color>
     <color name="l_card">#EDEAE6</color>
     <color name="l_dark">#242424</color>
     <color name="l_filter">#333333</color>
