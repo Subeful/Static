@@ -8,10 +8,10 @@
     tools:context=".screen.StaticFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/stat_filter_panel"
         style="@style/MyThemeMainGray"
         android:layout_width="match_parent"
-        android:layout_height="145dp"
+        android:layout_height="45dp"
         android:background="@drawable/shape_up_panel"
         android:orientation="vertical"
         android:paddingStart="15dp"
@@ -20,271 +20,544 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/MyThemeText"
+        <ImageButton
+            android:id="@+id/stat_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/akatab"
-            android:text="@string/system_category"
-            android:textSize="14sp" />
-
+            android:background="@drawable/ic_system_notify_alarm_settings"
+            android:layout_gravity="right"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"/>
         <LinearLayout
+            android:id="@+id/chooseHabit"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/MyThemeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/akatab"
+                android:text="@string/system_category"
+                android:textSize="14sp" />
 
-            <ImageButton
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_system_category" />
-
-            <HorizontalScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
+                android:layout_marginTop="-4dp">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageButton
+                        android:id="@+id/statistic_icon_category"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_system_category" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupHabit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="5dp"
+                            app:singleLine="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_water"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/habit_water" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_steps"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_steps" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_words"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_words" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_weather"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_weather" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_mood"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_mood" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_productive"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_productivity" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_sport"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_sport" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_sleep"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_sleep" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_screenTime"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_screen_time" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_cost"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/habit_cost" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHabit_comment"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/habit_comment" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="26dp"
+                    android:background="@drawable/chips_smouke"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/choosePeriod"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/statistic_tv2"
+                style="@style/MyThemeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/akatab"
+                android:text="@string/system_period"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="-4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_water"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                    <ImageButton
+                        android:id="@+id/statistic_icon_periud"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_system_calendar" />
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_steps"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_words"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="5dp"
+                            app:singleLine="true"
+                            app:singleSelection="true">
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_weather"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTime_today"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/time_today" />
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_mood"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTime_yesterday"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_yesterday" />
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_productivity"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTime_week"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_week" />
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_sport"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTime_month"
+                                style="@style/MyThemeFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_month" />
 
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_sleep"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_screen_time"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/habit_cost"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/habit_comment"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTime_year"
+                                style="@style/MyThemeFilter"
+                                android:layout_marginEnd="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_year" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </HorizontalScrollView>
                 </LinearLayout>
-            </HorizontalScrollView>
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="26dp"
+                    android:background="@drawable/chips_smouke"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <TextView
-            style="@style/MyThemeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/akatab"
-            android:text="@string/system_period"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_system_calendar" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/time_today"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/time_yesterday"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/time_week"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/time_month"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-
-                    <Button
-                        style="@style/MyThemeFilter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/time_year"
-                        android:textSize="14sp"
-                        app:cornerRadius="13dp" />
-                </LinearLayout>
-            </HorizontalScrollView>
-        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="25dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/stat_filter_panel">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="25dp"
-            android:layout_marginHorizontal="20dp">
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/MyThemeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/akatab"
-                android:text="@string/system_category"
-                android:textSize="14sp" />
-
-            <com.db.williamchart.view.LineChartView
+            <LinearLayout
+                android:id="@+id/main_info"
+                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                app:chart_axis="x"
-                app:chart_labelsSize="12sp"
-                app:chart_lineColor="@color/accent"
-                app:chart_labelsColor="@color/white"
-                app:chart_lineThickness="2dp"
-                app:chart_smoothLine="true" />
-
-            <TextView
-                style="@style/MyThemeText"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/akatab"
-                android:text="@string/system_category"
-                android:textSize="14sp" />
-            <com.db.williamchart.view.BarChartView
-                android:id="@+id/barChartView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:chart_barsColor="@color/accent"
-                app:chart_labelsColor="@color/white"
-                app:chart_barsRadius="12dp"
-                app:chart_spacing="5dp"
-                app:chart_labelsSize="12sp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_corner_radius"
+                    style="@style/MyThemeMainGray">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/mainStat_dayInApp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="10"
+                            android:gravity="center"
+                            android:paddingTop="6dp"
+                            android:textSize="30sp"
+                            android:fontFamily="@font/akatab_bold"
+                            android:textColor="@color/green"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/MyThemeTextOnGray"
+                            android:gravity="center"
+                            android:fontFamily="@font/akatab"
+                            android:text="@string/stat_dayOnApp"
+                            android:lineSpacingMultiplier="0.7"
+                            android:paddingBottom="5dp"
+                            android:textSize="10sp"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey"
+                        android:layout_marginVertical="4dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/mainStat_currentSeries"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="10"
+                            android:gravity="center"
+                            android:paddingTop="6dp"
+                            android:textSize="30sp"
+                            android:fontFamily="@font/akatab_bold"
+                            android:textColor="@color/peach"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/MyThemeTextOnGray"
+                            android:gravity="center"
+                            android:fontFamily="@font/akatab"
+                            android:text="@string/stat_currentSeries"
+                            android:lineSpacingMultiplier="0.7"
+                            android:paddingBottom="5dp"
+                            android:textSize="10sp"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey"
+                        android:layout_marginVertical="4dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/mainStat_recordSeries"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="10"
+                            android:gravity="center"
+                            android:paddingTop="6dp"
+                            android:textSize="30sp"
+                            android:fontFamily="@font/akatab_bold"
+                            android:textColor="@color/green"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/MyThemeTextOnGray"
+                            android:gravity="center"
+                            android:fontFamily="@font/akatab"
+                            android:text="@string/stat_record"
+                            android:lineSpacingMultiplier="0.7"
+                            android:paddingBottom="5dp"
+                            android:textSize="10sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="4dp"
+                        style="@style/MyThemeBackgroundScreen"/>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/MyThemeText"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/akatab"
+                    android:text="@string/stat_entrance"
+                    android:textSize="14sp" />
+                <com.db.williamchart.view.LineChartView
+                    android:id="@+id/main_storageFrequency"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    app:chart_axis="x"
+                    app:chart_labelsSize="12sp"
+                    app:chart_lineColor="@color/accent"
+                    app:chart_labelsColor="@color/white"
+                    app:chart_lineThickness="2dp"
+                    app:chart_smoothLine="true" />
+
+                <TextView
+                    style="@style/MyThemeText"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/akatab"
+                    android:text="@string/stat_donat_dayOnApp"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.db.williamchart.view.DonutChartView
+                        android:id="@+id/main_dayOnApp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        app:chart_donutRoundCorners="true"
+                        app:chart_donutBackgroundColor="@color/accent"
+                        app:chart_donutThickness="20dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/shape_corner_radius"
+                                android:backgroundTint="@color/green"/>
+                            <TextView
+                                style="@style/MyThemeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/akatab"
+                                android:text="@string/stat_activeDay"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/shape_corner_radius"
+                                android:backgroundTint="@color/pink"/>
+                            <TextView
+                                style="@style/MyThemeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/akatab"
+                                android:text="@string/stat_passiveDay"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/selected_info"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.db.williamchart.view.DonutChartView
+                        android:id="@+id/selected_dayOffTarget"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        app:chart_donutRoundCorners="true"
+                        app:chart_donutBackgroundColor="@color/accent"
+                        app:chart_donutThickness="20dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/shape_corner_radius"
+                                android:backgroundTint="@color/green"/>
+                            <TextView
+                                style="@style/MyThemeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/akatab"
+                                android:text="@string/stat_deyUpperTarget"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/shape_corner_radius"
+                                android:backgroundTint="@color/pink"/>
+                            <TextView
+                                style="@style/MyThemeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/akatab"
+                                android:text="@string/stat_deyDownTarget"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.db.williamchart.view.BarChartView
+                    android:id="@+id/selected_statistic"
+                    style="@style/MyThemeGraphic"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:chart_axis="x"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="90dp"
+                    app:chart_barsColor="@color/accent"
+                    app:chart_barsRadius="15dp"
+                    app:chart_labelsSize="12sp"
+                    app:chart_spacing="5dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

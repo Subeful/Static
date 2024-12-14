@@ -5,27 +5,25 @@
         <item name="android:windowLightStatusBar">false</item>
         
         <item name="colorAccent">@color/l_dark</item>
+        <item name="colorOnSurface">@color/l_gray</item>
     </style>
 
     <style name="Theme.Statik" parent="Base.Theme.Statik" />
 
-    <style name="MyThemeBackgroundScreen">
-        <item name="background">@color/l_light</item>
-    </style>
-    <style name="MyThemeText">
-        <item name="android:textColor">@color/l_dark</item>
-    </style>
-    <style name="MyThemeCard">
-        <item name="backgroundTint">@color/l_card</item>
-    </style>
-    <style name="MyThemeMainGray">
-        <item name="android:backgroundTint">@color/l_gray</item>
-    </style>
-    <style name="MyThemeBotNav">
-        <item name="backgroundTint">@color/l_bot_nav</item>
-    </style>
-    <style name="MyThemeFilter">
-        <item name="backgroundTint">@color/l_filter</item>
-        <item name="android:textColor">@color/l_light</item>
+    <style name="MyThemeBackgroundScreen">  <item name="background">@color/l_light</item>   </style>
+    <style name="MyThemeText">    <item name="android:textColor">@color/l_dark</item>    </style>
+    <style name="MyThemeGraphic">    <item name="chart_labelsColor">@color/l_dark</item>   </style>
+    <style name="MyThemeTextOnGray">    <item name="android:textColor">@color/l_textOnGray</item>   </style>
+    <style name="MyThemeMainGray">  <item name="android:backgroundTint">@color/l_gray</item>    </style>
+
+    <style name="MyThemeIcon">  <item name="android:fillColor">@color/l_dark</item>    </style>
+    <style name="MyThemeBotNav">    <item name="backgroundTint">@color/l_bot_nav</item> </style>
+    <style name="MyThemeCard">  <item name="backgroundTint">@color/l_card</item>    </style>
+
+
+    <style name="MyThemeFilter" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/n_dark</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipBackgroundColor">@color/color_chips</item>
     </style>
 </resources>

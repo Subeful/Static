@@ -4,7 +4,13 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="accent">#F2C788</color>
+    <color name="green">#9CBA6B</color>
+    <color name="peach">#DE8768</color>
+    <color name="pink">#C36868</color>
     <color name="transparent">#00FFFFFF</color>
+
+    <color name="light_grey">#FACECCCC</color>
+    <color name="grey">#808080</color>
 
     //dark
     <color name="n_dark">#242424</color>
@@ -12,7 +18,9 @@
     <color name="n_bot_nav">#424A4C</color>
     <color name="n_card">#514E49</color>
     <color name="n_light">#E8EAED</color>
-    <color name="n_filter">#D9D9D9</color>
+    <color name="n_filter">#827E7E</color>
+
+    <color name="n_textOnGray">#7A7A7A</color>
 
     //light
     <color name="l_light">#FCF5EB</color>
@@ -20,5 +28,8 @@
     <color name="l_bot_nav">#A4B7B7</color>
     <color name="l_card">#EDEAE6</color>
     <color name="l_dark">#242424</color>
-    <color name="l_filter">#333333</color>
+    <color name="l_filter">#3C3C3C</color>
+
+    <color name="l_textOnGray">#979899</color>
+
 </resources>

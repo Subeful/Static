@@ -13,32 +13,46 @@
     <string name="system_edit">Изменить</string>
     <string name="system_complete">Готово</string>
 
+    //statistic
+    <string name="stat_dayOnApp">Количество дней \nв приложении</string>
+    <string name="stat_currentSeries">Текущая серия \nбез пропусков дней</string>
+    <string name="stat_record">Рекорд серии \nбез пропусков дней</string>
+    <string name="stat_entrance">Частота сохранения статистики:</string>
+    <string name="stat_donat_dayOnApp">Дней в приложении:</string>
+
+    <string name="stat_activeDay">Активный день</string>
+    <string name="stat_passiveDay">Пропуск</string>
+
+
+    <string name="stat_deyUpperTarget">Дни, когда достиг цели</string>
+    <string name="stat_deyDownTarget">Дни, когда не достиг цели</string>
+
+
+
     //settings
-    <string name="set_habit">Привычки</string>
-    <string name="set_habit_activate">Активные</string>
-    <string name="set_habit_archive">Архив</string>
+        <string name="set_habit">Привычки</string>
+            <string name="set_habit_activate">Активные</string>
+            <string name="set_habit_archive">Архив</string>
 
-    <string name="set_custom">Кастомизация</string>
-    <string name="set_custom_theme">Тема</string>
-    <string name="set_custom_theme_light">Светлая</string>
-    <string name="set_custom_theme_dark">Тёмная</string>
-    <string name="set_custom_theme_sustem">Системная</string>
+        <string name="set_custom">Кастомизация</string>
+        <string name="set_custom_theme">Тема</string>
+            <string name="set_custom_theme_light">Светлая</string>
+            <string name="set_custom_theme_dark">Тёмная</string>
+            <string name="set_custom_theme_sustem">Системная</string>
+        <string name="set_custom_color_design">Цветовое оформление</string>
+        <string name="set_custom_language">Язык</string>
+            <string name="set_custom_language_rus">Русский</string>
+            <string name="set_custom_language_en">English</string>
 
-    <string name="set_custom_color_design">Цветовое оформление</string>
+        <string name="set_custom_notify">Уведомления</string>
+            <string name="set_custom_notify_turn_on">Включить уведомления</string>
+            <string name="set_custom_notify_time">Время Уведомлений</string>
+            <string name="set_custom_notify_settings">Настройки уведомлений</string>
 
-    <string name="set_custom_language">Язык</string>
-    <string name="set_custom_language_rus">Русский</string>
-    <string name="set_custom_language_en">English</string>
-
-    <string name="set_custom_notify">Уведомления</string>
-    <string name="set_custom_notify_turn_on">Включить уведомления</string>
-    <string name="set_custom_notify_time">Время Уведомлений</string>
-    <string name="set_custom_notify_settings">Настройки уведомлений</string>
-
-    <string name="set_service">Сервис</string>
-    <string name="set_service_feedback">Обратная связь</string>
-    <string name="set_service_rating">Оценить приложение</string>
-    <string name="set_service_share">Поделиться приложением</string>
+        <string name="set_service">Сервис</string>
+            <string name="set_service_feedback">Обратная связь</string>
+            <string name="set_service_rating">Оценить приложение</string>
+            <string name="set_service_share">Поделиться приложением</string>
 
     //habit
     <string name="habit_water">Вода</string>
@@ -59,7 +73,5 @@
     <string name="time_week">Неделя</string>
     <string name="time_month">Месяц</string>
     <string name="time_year">Год</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -4,30 +4,27 @@
         <item name="android:navigationBarColor">@color/n_bot_nav</item>
         <item name="android:windowLightStatusBar">false</item>
 
+        <item name="android:windowTitleBackgroundStyle">@color/accent</item>
         <item name="colorAccent">@color/n_light</item>
+        <item name="colorOnSurface">@color/n_gray</item>
     </style>
 
-    <style name="MyThemeBackgroundScreen">
-        <item name="background">@color/n_light</item>
-    </style>
-    <style name="MyThemeText">
-        <item name="android:textColor">@color/n_light</item>
-    </style>
-    <style name="MyThemeCard">
-        <item name="backgroundTint">@color/n_card</item>
-    </style>
-    <style name="MyThemeMainGray">
-        <item name="android:backgroundTint">@color/n_gray</item>
-    </style>
-    <style name="MyThemeBotNav">
-        <item name="backgroundTint">@color/n_bot_nav</item>
-    </style>
-    <style name="MyThemeFilter">
-        <item name="backgroundTint">@color/n_filter</item>
+    <style name="MyThemeBackgroundScreen">  <item name="background">@color/n_dark</item>    </style>
+    <style name="MyThemeText">  <item name="android:textColor">@color/n_light</item>    </style>
+    <style name="MyThemeGraphic">    <item name="chart_labelsColor">@color/l_light</item>   </style>
+    <style name="MyThemeMainGray">  <item name="android:backgroundTint">@color/n_gray</item>    </style>
+
+    <style name="MyThemeIcon">  <item name="android:fillColor">@color/n_light</item>    </style>
+    <style name="MyThemeBotNav">    <item name="backgroundTint">@color/n_bot_nav</item> </style>
+    <style name="MyThemeCard">  <item name="backgroundTint">@color/n_card</item>    </style>
+
+    <style name="MyThemeTextOnGray">    <item name="android:textColor">@color/n_textOnGray</item>   </style>
+
+    <style name="MyThemeFilter" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="android:textColor">@color/n_dark</item>
-    </style>
-    <style name="MyThemeIcon">
-        <item name="android:fillColor">@color/n_light</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipBackgroundColor">@color/color_chips</item>
+        <item name="chipStrokeColor">@color/black</item>
     </style>
 
 </resources>
