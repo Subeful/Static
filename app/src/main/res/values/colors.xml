@@ -32,4 +32,14 @@
 
     <color name="l_textOnGray">#979899</color>
 
+
+
+    //color design
+    <color name="color_1">#E9BC7A</color>
+    <color name="color_2">#9CBA6B</color>
+    <color name="color_3">#6BBACC</color>
+    <color name="color_4">#E789E9</color>
+    <color name="color_5">#DE8768</color>
+    <color name="color_6">#EFDC71</color>
+
 </resources>

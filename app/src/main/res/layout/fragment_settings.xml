@@ -4,19 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/MyThemeBackgroundScreen"
-    android:layout_marginHorizontal="15dp"
     tools:context=".screen.fragment.SettingsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_marginHorizontal="15dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/set_marker_habit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -36,13 +37,13 @@
                 android:layout_height="wrap_content"
                 style="@style/MyThemeMainGray"
                 android:orientation="vertical"
-                android:paddingVertical="15dp"
                 android:background="@drawable/shape_corner_radius">
 
                 <LinearLayout
+                    android:id="@+id/set_habit_active"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    android:layout_height="match_parent"
+                    style="@style/SetMenuTop">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -66,12 +67,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#636363"
-                    android:layout_marginVertical="8dp"/>
+                    android:background="#636363"/>
                 <LinearLayout
+                    android:id="@+id/set_habit_archive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuBottom">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/set_marker_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -114,13 +116,13 @@
                 android:layout_height="wrap_content"
                 style="@style/MyThemeMainGray"
                 android:orientation="vertical"
-                android:paddingVertical="15dp"
                 android:background="@drawable/shape_corner_radius">
 
                 <LinearLayout
+                    android:id="@+id/set_custom_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuTop">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -144,12 +146,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#636363"
-                    android:layout_marginVertical="8dp"/>
+                    android:background="#636363"/>
                 <LinearLayout
+                    android:id="@+id/set_custom_color_desibn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuMedium">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -173,12 +175,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#636363"
-                    android:layout_marginVertical="8dp"/>
+                    android:background="#636363" />
                 <LinearLayout
+                    android:id="@+id/set_custom_language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuBottom">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -202,6 +204,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/set_marker_notify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -221,13 +224,13 @@
                 android:layout_height="wrap_content"
                 style="@style/MyThemeMainGray"
                 android:orientation="vertical"
-                android:paddingVertical="15dp"
                 android:background="@drawable/shape_corner_radius">
 
                 <LinearLayout
+                    android:id="@+id/set_notify"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuMedium">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -251,6 +254,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/set_marker_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -270,14 +274,14 @@
                 android:layout_height="wrap_content"
                 style="@style/MyThemeMainGray"
                 android:orientation="vertical"
-                android:paddingVertical="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/shape_corner_radius">
 
                 <LinearLayout
+                    android:id="@+id/set_service_feedback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuTop">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -301,12 +305,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#636363"
-                    android:layout_marginVertical="8dp"/>
+                    android:background="#636363" />
                 <LinearLayout
+                    android:id="@+id/set_service_share"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuMedium">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -328,14 +332,12 @@
                         android:background="@drawable/ic_system_go"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#636363"
-                    android:layout_marginVertical="8dp"/>
+                    style="@style/SetLine"/>
                 <LinearLayout
+                    android:id="@+id/set_service_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    style="@style/SetMenuBottom">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

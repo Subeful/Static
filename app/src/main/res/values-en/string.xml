@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">Statik</string>
+
+    //bottom navigation
+    <string name="nav_statistic">Statistic</string>
+    <string name="nav_global">Global</string>
+    <string name="nav_settings">Settings</string>
+
+    //system
+    <string name="system_start">Start</string>
+    <string name="system_category">Category</string>
+    <string name="system_period">Period</string>
+    <string name="system_edit">Edit</string>
+    <string name="system_complete">Complete</string>
+
+    <string name="system_creating">Creating...</string>
+
+    //statistic
+    <string name="stat_dayOnApp">Number of days \nin the app</string>
+    <string name="stat_currentSeries">Current series \nwithout skipping days</string>
+    <string name="stat_record">Current series \nwithout skipping days</string>
+    <string name="stat_entrance">Frequency of saving statistics:</string>
+    <string name="stat_donat_dayOnApp">Days in the app:</string>
+
+    <string name="stat_activeDay">Active day</string>
+    <string name="stat_passiveDay">Pass</string>
+
+    <string name="stat_deyUpperTarget">Days when reached my goal</string>
+    <string name="stat_deyDownTarget">Days when no reached my goal</string>
+
+
+    //settings
+    <string name="set_habit">Habit</string>
+    <string name="set_habit_activate">Habit activate</string>
+    <string name="set_habit_archive">Habit archive</string>
+
+    <string name="set_custom">Custom</string>
+    <string name="set_custom_theme">Theme</string>
+    <string name="set_custom_theme_light">Light</string>
+    <string name="set_custom_theme_dark">Dark</string>
+    <string name="set_custom_theme_sustem">System</string>
+    <string name="set_custom_color_design">Color design</string>
+    <string name="set_custom_language">Language</string>
+    <string name="set_custom_language_rus">Русский</string>
+    <string name="set_custom_language_en">English</string>
+
+    <string name="set_custom_notify">Notifications</string>
+    <string name="set_custom_notify_turn_on">Enable notifications</string>
+    <string name="set_custom_notify_time">Notification time</string>
+    <string name="set_custom_notify_settings">Notification settings</string>
+
+    <string name="set_service">Service</string>
+    <string name="set_service_feedback">Feedback</string>
+        <string name="set_service_feedback_title">Question for application Statik</string>
+        <string name="set_service_feedback_message">Hello! I have a question about</string>
+        <string name="set_service_feedback_complete">Mail send</string>
+        <string name="set_service_feedback_fatal">Mail send</string>
+    <string name="set_service_rating">Rate the application</string>
+    <string name="set_service_share">Share application</string>
+
+    //habit
+    <string name="habit_water">Water</string>
+    <string name="habit_steps">Steps</string>
+    <string name="habit_words">Words</string>
+    <string name="habit_weather">Weather</string>
+    <string name="habit_mood">Mood</string>
+    <string name="habit_productivity">Productivity</string>
+    <string name="habit_sleep">Sleep</string>
+    <string name="habit_sport">Sport</string>
+    <string name="habit_screen_time">Screen_time</string>
+    <string name="habit_cost">Cost</string>
+    <string name="habit_comment">Comment</string>
+
+    //time zone
+    <string name="time_today">Today</string>
+    <string name="time_yesterday">Yesterday</string>
+    <string name="time_week">Week</string>
+    <string name="time_month">Month</string>
+    <string name="time_year">Year</string>
+
+</resources>

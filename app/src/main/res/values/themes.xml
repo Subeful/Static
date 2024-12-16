@@ -6,6 +6,7 @@
         
         <item name="colorAccent">@color/l_dark</item>
         <item name="colorOnSurface">@color/l_gray</item>
+        <item name="colorContainer">@color/l_bot_nav</item>
     </style>
 
     <style name="Theme.Statik" parent="Base.Theme.Statik" />
@@ -25,5 +26,26 @@
         <item name="android:textColor">@color/n_dark</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="chipBackgroundColor">@color/color_chips</item>
+    </style>
+
+    <style name="SetMenuTop">
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+    </style>
+    <style name="SetMenuMedium">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+    </style><style name="SetMenuBottom">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+    </style>
+
+    <style name="SetLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#636363</item>
     </style>
 </resources>

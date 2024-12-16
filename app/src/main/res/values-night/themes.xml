@@ -7,6 +7,7 @@
         <item name="android:windowTitleBackgroundStyle">@color/accent</item>
         <item name="colorAccent">@color/n_light</item>
         <item name="colorOnSurface">@color/n_gray</item>
+        <item name="colorContainer">@color/n_bot_nav</item>
     </style>
 
     <style name="MyThemeBackgroundScreen">  <item name="background">@color/n_dark</item>    </style>
@@ -27,4 +28,25 @@
         <item name="chipStrokeColor">@color/black</item>
     </style>
 
+
+    <style name="SetMenuTop">
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+    </style>
+    <style name="SetMenuMedium">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+    </style><style name="SetMenuBottom">
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:paddingBottom">15dp</item>
+    <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+</style>
+
+    <style name="SetLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#636363</item>
+    </style>
 </resources>

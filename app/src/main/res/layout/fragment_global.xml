@@ -8,6 +8,7 @@
     tools:context=".screen.fragment.GlobalFragment">
 
     <TextView
+        android:id="@+id/currentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -34,10 +35,12 @@
         app:layout_constraintVertical_bias="1.0">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_habitCard"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="130dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginHorizontal="10dp"
             tools:listitem="@layout/model_card">
 
         </androidx.recyclerview.widget.RecyclerView>

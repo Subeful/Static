@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingHorizontal="15dp"
+    android:background="@drawable/shape_alert">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:fontFamily="@font/akatab"
+            style="@style/MyThemeText"
+            android:text="@string/set_custom_language_rus"/>
+        <RadioButton
+            android:id="@+id/choose_language_ru_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:fontFamily="@font/akatab"
+            style="@style/MyThemeText"
+            android:text="@string/set_custom_language_en"/>
+        <RadioButton
+            android:id="@+id/choose_language_en_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/choose_language_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="@string/system_complete"
+        app:cornerRadius="5dp"
+        android:layout_marginTop="20sp"
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/n_dark"
+        android:textSize="18sp"
+        android:fontFamily="@font/akatab_bold"
+        android:layout_gravity="right"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>
