@@ -13,7 +13,8 @@
     <style name="MyThemeBackgroundScreen">  <item name="background">@color/n_dark</item>    </style>
     <style name="MyThemeText">  <item name="android:textColor">@color/n_light</item>    </style>
     <style name="MyThemeGraphic">    <item name="chart_labelsColor">@color/l_light</item>   </style>
-    <style name="MyThemeMainGray">  <item name="android:backgroundTint">@color/n_gray</item>    </style>
+    <style name="MyThemeMainGrayTint">  <item name="android:backgroundTint">@color/n_gray</item>    </style>
+    <style name="MyThemeMainGray">  <item name="android:background">@color/n_gray</item>    </style>
 
     <style name="MyThemeIcon">  <item name="android:fillColor">@color/n_light</item>    </style>
     <style name="MyThemeBotNav">    <item name="backgroundTint">@color/n_bot_nav</item> </style>

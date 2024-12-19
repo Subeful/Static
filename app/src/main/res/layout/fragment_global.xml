@@ -22,7 +22,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        style="@style/MyThemeMainGray"
+        style="@style/MyThemeMainGrayTint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
@@ -49,6 +49,7 @@
 
 
     <Button
+        android:id="@+id/global_start"
         android:layout_width="245dp"
         android:layout_height="65dp"
         style="@style/ThemeOverlay.Material3.Button.TextButton"

@@ -15,7 +15,8 @@
     <style name="MyThemeText">    <item name="android:textColor">@color/l_dark</item>    </style>
     <style name="MyThemeGraphic">    <item name="chart_labelsColor">@color/l_dark</item>   </style>
     <style name="MyThemeTextOnGray">    <item name="android:textColor">@color/l_textOnGray</item>   </style>
-    <style name="MyThemeMainGray">  <item name="android:backgroundTint">@color/l_gray</item>    </style>
+    <style name="MyThemeMainGrayTint">  <item name="android:backgroundTint">@color/l_gray</item>    </style>
+    <style name="MyThemeMainGray">  <item name="android:background">@color/l_gray</item>    </style>
 
     <style name="MyThemeIcon">  <item name="android:fillColor">@color/l_dark</item>    </style>
     <style name="MyThemeBotNav">    <item name="backgroundTint">@color/l_bot_nav</item> </style>

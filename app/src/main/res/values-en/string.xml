@@ -14,6 +14,7 @@
     <string name="system_complete">Complete</string>
 
     <string name="system_creating">Creating...</string>
+    <string name="system_thatks">Thanks</string>
 
     //statistic
     <string name="stat_dayOnApp">Number of days \nin the app</string>
@@ -54,8 +55,10 @@
         <string name="set_service_feedback_title">Question for application Statik</string>
         <string name="set_service_feedback_message">Hello! I have a question about</string>
         <string name="set_service_feedback_complete">Mail send</string>
-        <string name="set_service_feedback_fatal">Mail send</string>
+        <string name="set_service_feedback_fatal">Fatal. Something went wrong</string>
     <string name="set_service_rating">Rate the application</string>
+    <string name="set_service_rating_title">How do you like our application?</string>
+    <string name="set_service_rating_message">You can write to support with your suggestion.</string>
     <string name="set_service_share">Share application</string>
 
     //habit
@@ -67,7 +70,7 @@
     <string name="habit_productivity">Productivity</string>
     <string name="habit_sleep">Sleep</string>
     <string name="habit_sport">Sport</string>
-    <string name="habit_screen_time">Screen_time</string>
+    <string name="habit_screen_time">Screen time</string>
     <string name="habit_cost">Cost</string>
     <string name="habit_comment">Comment</string>
 

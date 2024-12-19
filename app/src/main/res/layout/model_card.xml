@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/ic_water" />
+        />
 
     <TextView
         android:id="@+id/model_habitCard_count"
@@ -28,6 +28,5 @@
         android:layout_marginBottom="3dp"
         android:fontFamily="@font/akatab"
         android:gravity="right"
-        android:text="100"
         android:textSize="15sp" />
 </androidx.cardview.widget.CardView>

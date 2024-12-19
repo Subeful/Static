@@ -14,6 +14,7 @@
     <string name="system_complete">Готово</string>
 
     <string name="system_creating">В разработке</string>
+    <string name="system_thatks">Спасибо</string>
 
     //statistic
     <string name="stat_dayOnApp">Количество дней \nв приложении</string>
@@ -55,8 +56,10 @@
     <string name="set_service_feedback_title">Вопрос по приложению Statik</string>
     <string name="set_service_feedback_message">Здравствуйте! У меня возник вопрос по поводу </string>
     <string name="set_service_feedback_complete">Сообщение отправлено</string>
-    <string name="set_service_feedback_fatal">Ошибка. Сообщение не отправлено</string>
+    <string name="set_service_feedback_fatal">Ошибка. Что-то пошло не так</string>
     <string name="set_service_rating">Оценить приложение</string>
+    <string name="set_service_rating_title">Как вам наше приложение?</string>
+    <string name="set_service_rating_message">Вы можете написать в поддержку со своим предложением.</string>
     <string name="set_service_share">Поделиться приложением</string>
 
     //habit

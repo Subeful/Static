@@ -17,7 +17,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.RadioButton
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +31,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.subefu.statik.R
 import com.subefu.statik.databinding.FragmentSettingsBinding
 import com.subefu.statik.recevier.NotificationReceiver
+import com.subefu.statik.screen.HabitStorageActivity
 import com.subefu.statik.utils.Constant
 import com.subefu.statik.utils.UpdateFragment
 import java.util.Calendar
@@ -46,24 +49,29 @@ class SettingsFragment : Fragment() {
 
         config = requireContext().getSharedPreferences(Constant.CONFIG, 0)
 
-        binding.setCustomTheme.setOnClickListener {
-            showChooseTheme()
-        }
+        binding.setCustomTheme.setOnClickListener { showChooseTheme() }
         binding.setCustomColorDesibn.setOnClickListener {
-//            showChooseColor()
-            Toast.makeText(requireContext(), getString(R.string.system_creating), Toast.LENGTH_SHORT).show()
+        //            showChooseColor()
+                    Toast.makeText(requireContext(), getString(R.string.system_creating), Toast.LENGTH_SHORT).show()
         }
-        binding.setCustomLanguage.setOnClickListener {
-            showChooseLanguage()
-        }
+
+        binding.setCustomLanguage.setOnClickListener { showChooseLanguage() }
 
         binding.setNotify.setOnClickListener { showNotificationConfig() }
 
-        binding.setServiceShare.setOnClickListener {
-            showShare()
+        binding.setServiceShare.setOnClickListener { showShare() }
+        binding.setServiceFeedback.setOnClickListener { showFeedback() }
+        binding.setServiceRating.setOnClickListener { showRating() }
+
+        binding.setHabitActive.setOnClickListener {
+            val intent = Intent(requireContext(), HabitStorageActivity::class.java)
+            intent.putExtra("config", "active")
+            startActivity(intent)
         }
-        binding.setServiceFeedback.setOnClickListener {
-            showFeedback()
+        binding.setHabitArchive.setOnClickListener {
+            val intent = Intent(requireContext(), HabitStorageActivity::class.java)
+            intent.putExtra("config", "archive")
+            startActivity(intent)
         }
 
         return binding.root
@@ -72,6 +80,21 @@ class SettingsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         functionUpdateFragment = context as UpdateFragment
+    }
+
+    fun showRating(){
+        val view = layoutInflater.inflate(R.layout.alert_rating, null)
+
+        val rating = view.findViewById<RatingBar>(R.id.ratingBar)
+
+        val alert = AlertDialog.Builder(requireContext()).setView(view)
+        val dialog = alert.create()
+        dialog.window?.setBackgroundDrawable(requireContext().getDrawable(R.drawable.shape_alert))
+        dialog.setOnCancelListener {
+            if(rating.rating > 3)
+                Toast.makeText(requireContext(), requireContext().getString(R.string.system_thatks), Toast.LENGTH_SHORT).show()
+        }
+        dialog.show()
     }
 
     fun showShare(){
