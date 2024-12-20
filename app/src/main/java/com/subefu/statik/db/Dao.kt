@@ -23,7 +23,7 @@ interface Dao {
 
     //Water
     @Insert
-    fun addNewRecordForWater(dayWater: ModelHabitWater): Unit
+    fun addNewRecordForWater(dayWater: ModelHabitWater)
     @Query("update water_days set day_result = :newResult where day_date = :date")
     fun updateRecordWater(newResult: Int, date: Long)
     @Query("select * from water_days where day_date between :startDate and :endDate")
@@ -39,7 +39,7 @@ interface Dao {
     @Query("select * from steps_days where day_date between :startDate and :endDate")
     fun selectPeriodForSteps(startDate: Long, endDate: Long): List<ModelHabitSteps>
     @Query("select * from steps_days where day_date = :date limit 1")
-    fun selectCurrentDataForSteps(date: Long): ModelHabitSteps
+    fun selectCurrentDataForSteps(date: Long): ModelHabitSteps?
 
     //Words
     @Insert
