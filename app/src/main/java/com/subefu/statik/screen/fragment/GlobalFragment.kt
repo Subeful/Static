@@ -1,6 +1,8 @@
 package com.subefu.statik.screen.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,21 +11,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.subefu.statik.R
 import com.subefu.statik.databinding.FragmentGlobalBinding
 import com.subefu.statik.model.HabitCard
 import com.subefu.statik.adapter.HabitCardAdapter
 import com.subefu.statik.db.ModelHabit
 import com.subefu.statik.db.MyDatabase
 import com.subefu.statik.screen.GradeActivity
+import com.subefu.statik.screen.MainActivity
 import com.subefu.statik.utils.Constant
+import com.subefu.statik.utils.RemakeFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 
 class GlobalFragment : Fragment() {
 
@@ -31,10 +40,11 @@ class GlobalFragment : Fragment() {
     val listHabitCard = ArrayList<HabitCard>()
     lateinit var db: MyDatabase
 
-    var data = 0L
+    lateinit var remakeFragment: MainActivity
 
+    var data = MainActivity.data
+    @SuppressLint("StaticFieldLeak")
     companion object{
-        @SuppressLint("StaticFieldLeak")
         lateinit var adapter: HabitCardAdapter
     }
 
@@ -47,14 +57,42 @@ class GlobalFragment : Fragment() {
             requireContext().startActivity(intent)
         }
 
+        binding.globalCalendar.setOnClickListener {
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText(requireContext().getString(R.string.system_select_date))
+                    .setSelection(data)
+                    .setTheme(R.style.ThemeOverlay_App_DatePicker)
+                    .build()
+            datePicker.addOnPositiveButtonClickListener {
+                val newTime = datePicker.selection!!
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = newTime; calendar.set(Calendar.HOUR_OF_DAY, 12)
+                calendar.set(Calendar.MINUTE, 0);calendar.set(Calendar.SECOND, 0);calendar.set(Calendar.MILLISECOND, 0);
+                MainActivity.data = calendar.timeInMillis
+                Log.d("New date global", SimpleDateFormat("dd.MM.yy").format(Date(MainActivity.data)))
+                binding.currentDate.text = SimpleDateFormat("dd.MM.yy").format(Date(MainActivity.data))
+
+                remakeFragment.setFragment(GlobalFragment())
+            }
+            datePicker.show(parentFragmentManager.beginTransaction(), "tag")
+        }
+
         return binding.root
+    }
+
+    @SuppressLint("UseRequireInsteadOfGet")
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        remakeFragment = activity!! as MainActivity
     }
 
     fun init() {
         db = MyDatabase.getDb(requireContext())
+        Log.d("CREATE SCREEN", "Global fragment")
+        binding.currentDate.setText(SimpleDateFormat("dd.MM.yy").format(Date(data)))
 
         adapter = HabitCardAdapter(requireContext(), listHabitCard)
-        setCurrentDate()
         loadCard()
     }
 
@@ -181,20 +219,4 @@ class GlobalFragment : Fragment() {
             }
         }
     }
-
-
-    @SuppressLint("SimpleDateFormat")
-    fun setCurrentDate(){
-        val formater = SimpleDateFormat("yyyy-MM-dd")
-        binding.currentDate.text = formater.format(Calendar.getInstance().time)
-
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 12)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        data = calendar.timeInMillis
-        Log.d("Current date", calendar.timeInMillis.toString())
-    }
-
 }

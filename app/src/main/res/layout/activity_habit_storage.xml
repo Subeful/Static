@@ -37,17 +37,52 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_down_panel"
-        style="@style/MyThemeMainGrayTint">
+        style="@style/MyThemeMainGrayTint"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/habit_status_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/model_habit_status"
-            tools:itemCount="4"/>
+            tools:itemCount="0"/>
+
+        <LinearLayout
+            android:id="@+id/storage_not_found"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:background="@drawable/system_not_found"/>
+            <TextView
+                android:id="@+id/storage_not_found_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/MyThemeText"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/akatab"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:text="@string/system_not_found_active_habit"/>
+            <TextView
+                android:id="@+id/storage_not_found_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/akatab"
+                android:textSize="20sp"
+                android:textColor="@color/color_3"
+                android:layout_gravity="center"
+                android:text="@string/system_not_found_habit_go_archive"/>
+        </LinearLayout>
 
     </LinearLayout>
 

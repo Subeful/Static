@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import com.subefu.statik.R
 import com.subefu.statik.databinding.FragmentStatisticBinding
 import com.subefu.statik.db.Dao
-import com.subefu.statik.db.ModelHabitWater
 import com.subefu.statik.db.MyDatabase
 import com.subefu.statik.utils.Constant
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +53,7 @@ class StatisticFragment : Fragment() {
             toggleChildLayout(binding.choosePeriod)
             setModeSelection()
 
+            delAllSelectChart()
             currentSelectHabit = when(checkedId){
                 R.id.chipHabit_water -> "water"
                 R.id.chipHabit_steps -> "steps"
@@ -65,7 +65,6 @@ class StatisticFragment : Fragment() {
                 R.id.chipHabit_sleep -> "sleep"
                 R.id.chipHabit_screenTime -> "screenTime"
                 R.id.chipHabit_cost -> "cost"
-                R.id.chipHabit_comment -> "comment"
                 else -> "error chip"
             }
 
@@ -133,6 +132,14 @@ class StatisticFragment : Fragment() {
             when(habit){
                 "water" -> installWaterStatistic(period)
                 "steps" -> installStepsStatistic(period)
+                "words" -> installWordsStatistic(period)
+                "weather" -> installWeatherStatistic(period)
+                "mood" -> installMoodStatistic(period)
+                "productive" -> installProductiveStatistic(period)
+                "sport" -> installSportStatistic(period)
+                "sleep" -> installSleepStatistic(period)
+                "screenTime" -> installScreenTimeStatistic(period)
+                "cost" -> installCostStatistic(period)
                 else -> {}
             }
         }
@@ -143,7 +150,7 @@ class StatisticFragment : Fragment() {
             val lineList = ArrayList<Pair<String, Float>>()
             val list = dao.selectPeriodForWater(listDate.get("month")!!.toLong(), (listDate.get("today")?.plus(1))!!.toLong())
             list.forEach {
-                val date = getTime(it.day_date)
+                val date = SimpleDateFormat("dd").format(Date(it.day_date))
                 lineList.add(Pair(date, it.day_result.toFloat()))
                 Log.d("line chart", "${it.day_date}, ${it.day_result}")
             }
@@ -157,7 +164,7 @@ class StatisticFragment : Fragment() {
                 lineList.addAll(newList)
             }
             else if(lineList.isEmpty()){
-                lineList.addAll(filNothingList())
+                lineList.addAll(filNothingListWeek())
             }
 
             launch(Dispatchers.Main) {
@@ -173,7 +180,7 @@ class StatisticFragment : Fragment() {
             if(dateLastEntrance == 0L || dateFirstEntrance == 0L)
                 return@launch
 
-            val period = (dateLastEntrance - dateFirstEntrance) / 86_400_000
+            val period = ((dateLastEntrance - dateFirstEntrance) / 86_400_000) + 1
 
             Log.d("Donat date", dateFirstEntrance.toString())
             Log.d("Donat date", dateLastEntrance.toString())
@@ -189,6 +196,7 @@ class StatisticFragment : Fragment() {
                 setMainChartDonat(listData)
 
                 binding.mainDonatTextActive.append(" ($activeDay)")
+
                 binding.mainDonatTextPassive.append(" (${(period - activeDay)})")
             }
         }
@@ -196,34 +204,34 @@ class StatisticFragment : Fragment() {
 
     fun installWaterStatistic(period: String){
         lifecycleScope.launch(Dispatchers.Default){
-            val listModelWater = ArrayList<ModelHabitWater>()
-
+            var listData = ArrayList<Pair<String, Float>>()
             //set date for selected period
-
-            if(period == "week")
-                listModelWater.addAll(dao.selectPeriodForWater(listDate.get("week") as Long, listDate.get("today")!!.plus(1)))
-            else if(period == "month")
-                listModelWater.addAll(dao.selectPeriodForWater(listDate.get("month") as Long, listDate.get("today")!!.plus(1)))
-            else if(period == "year")
-                listModelWater.addAll(dao.selectPeriodForWater(listDate.get("year") as Long, listDate.get("today")!!.plus(1)))
-            else
-                listModelWater.addAll(dao.selectPeriodForWater(listDate.get("week") as Long, listDate.get("today")!!.plus(1)))
-
-            val listData = ArrayList<Pair<String, Float>>()
-
-            listModelWater.forEachIndexed { index, it ->
-                Log.d("List water", "$index. ${it.day_date} - ${it.day_result}")
-                val date = if(it.day_date == 0L) "" else getTime(it.day_date)
-                listData.add(Pair(date, it.day_result.toFloat()))
+            if(period == "month"){
+                val list = dao.selectPeriodForWater(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
             }
-            // when size == 1< chart don`t draw column
-            if(listModelWater.size == 1){
-                listData.add(Pair("", 0f))
-                listData.add(Pair(" ", 0f))
+            else if(period == "year"){
+                val list = dao.selectPeriodForWater(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
             }
-
-            launch(Dispatchers.Main) {
-//                setSelectedChartStatistic(listData)
+            else if(period == "week"){
+                val list = dao.selectPeriodForWater(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
             }
         }
     }
@@ -232,36 +240,297 @@ class StatisticFragment : Fragment() {
 
             var listData = ArrayList<Pair<String, Float>>()
             //set date for selected period
-
             if(period == "month"){
                 val list = dao.selectPeriodForSteps(listDate.get(period) as Long, date + 1)
                 if(list.size != 0 && list[0] != null){
                     val map = LinkedHashMap<String, Float>()
                     list.forEach { map.put(getTime(it.day_date), it.day_result) }
-
                     listData = getMediumForMonth(map)
-                    Log.d("ListData", "${listData.size}, ${listData[0].second}")
                 }
-                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(listData) }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
             }
             else if(period == "year"){
                 val list = dao.selectPeriodForSteps(listDate.get("year") as Long, date + 1)
                 if(list.size != 0 && list[0] != null){
                     val map = LinkedHashMap<String, Float>()
                     list.forEach { map.put(getTime(it.day_date), it.day_result) }
-
                     listData = getMediumForYear(map)
-                    Log.d("ListData", "${listData.size}, ${listData[0].second}")
                 }
-                launch(Dispatchers.Main) { setSelectedChartStatisticYear(listData) }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
             }
             else if(period == "week"){
                 val list = dao.selectPeriodForSteps(listDate.get("week") as Long, date + 1)
                 if(list.size != 0 && list[0] != null){
-                    list.forEach { listData.add(Pair(getTime(it.day_date), it.day_result)) }
-                    Log.d("ListData", "${listData.size}, ${listData[0].second}")
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result) }
+                    listData = getMediumForWeek(map)
                 }
-                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(listData) }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installWordsStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForWords(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForWords(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForWords(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installWeatherStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForWeather(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForWeather(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForWeather(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installMoodStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForMood(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForMood(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForMood(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installProductiveStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForProductive(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForProductive(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForProductive(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installSportStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForSport(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForSport(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForSport(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installSleepStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForSleep(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForSleep(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForSleep(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                    
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installScreenTimeStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForScreenTime(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForScreenTime(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForScreenTime(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
+            }
+        }
+    }
+    fun installCostStatistic(period: String){
+        lifecycleScope.launch(Dispatchers.Default){
+            var listData = ArrayList<Pair<String, Float>>()
+            //set date for selected period
+            if(period == "month"){
+                val list = dao.selectPeriodForCost(listDate.get(period) as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForMonth(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticMonth(if(listData.isEmpty()) filNothingListMonth() else listData) }
+            }
+            else if(period == "year"){
+                val list = dao.selectPeriodForCost(listDate.get("year") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForYear(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticYear(if(listData.isEmpty()) filNothingListYear() else listData) }
+            }
+            else if(period == "week"){
+                val list = dao.selectPeriodForCost(listDate.get("week") as Long, date + 1)
+                if(list.size != 0 && list[0] != null){
+                    val map = LinkedHashMap<String, Float>()
+                    list.forEach { map.put(getTime(it.day_date), it.day_result.toFloat()) }
+                    listData = getMediumForWeek(map)
+                }
+                launch(Dispatchers.Main) { setSelectedChartStatisticWeek(if(listData.isEmpty()) filNothingListWeek() else listData) }
             }
         }
     }
@@ -277,7 +546,7 @@ class StatisticFragment : Fragment() {
             lineChart.onDataPointClickListener = { index, _, _ ->
                 Toast.makeText(
                     requireContext(),
-                    ( if(list.isEmpty()) filNothingList() else list )
+                    ( if(list.isEmpty()) filNothingListWeek() else list )
                         .toList().get(index).second.toString(),
                     Toast.LENGTH_SHORT
                 ).show()
@@ -305,9 +574,8 @@ class StatisticFragment : Fragment() {
         }
     }
     fun setSelectedChartStatisticWeek(list: List<Pair<String, Float>>) {
+        delAllSelectChart()
         binding.selectedStatisticWeek.visibility = View.VISIBLE
-        binding.selectedStatisticYear.visibility = View.GONE
-        binding.selectedStatisticMonth.visibility = View.GONE
 
         val selectedStatistic = binding.selectedStatisticWeek
         selectedStatistic.apply {
@@ -320,9 +588,9 @@ class StatisticFragment : Fragment() {
         }
     }
     fun setSelectedChartStatisticMonth(list: List<Pair<String, Float>>) {
-        binding.selectedStatisticWeek.visibility = View.GONE
-        binding.selectedStatisticYear.visibility = View.GONE
+        delAllSelectChart()
         binding.selectedStatisticMonth.visibility = View.VISIBLE
+        binding.selectedLineMonth.visibility = View.VISIBLE
 
         val selectedStatistic = binding.selectedStatisticMonth
         selectedStatistic.apply {
@@ -335,9 +603,9 @@ class StatisticFragment : Fragment() {
         }
     }
     fun setSelectedChartStatisticYear(list: List<Pair<String, Float>>) {
-        binding.selectedStatisticWeek.visibility = View.GONE
+        delAllSelectChart()
         binding.selectedStatisticYear.visibility = View.VISIBLE
-        binding.selectedStatisticMonth.visibility = View.GONE
+        binding.selectedLineYear.visibility = View.VISIBLE
 
         val selectedStatistic = binding.selectedStatisticYear
         selectedStatistic.apply {
@@ -350,8 +618,88 @@ class StatisticFragment : Fragment() {
         }
     }
 
+    fun setSelectedChartLineYear(list: List<Pair<String, Float>>) {
+        val lineChart = binding.selectedLineYear
+        lineChart.apply {
+            lineChart.tooltip.onCreateTooltip(lineChart)
+            lineChart.animation.duration = animateDuration
+            lineChart.gradientFillColors = intArrayOf(Color.parseColor("#F2C788"), Color.TRANSPARENT)
+            lineChart.animate(list)
+            lineChart.onDataPointClickListener = { index, _, _ ->
+                Toast.makeText(
+                    requireContext(),
+                    ( if(list.isEmpty()) filNothingListYear() else list )
+                        .toList().get(index).second.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+    fun setSelectedChartLineMonth(list: List<Pair<String, Float>>) {
+        val lineChart = binding.selectedLineMonth
+        lineChart.apply {
+            lineChart.tooltip.onCreateTooltip(lineChart)
+            lineChart.animation.duration = animateDuration
+            lineChart.gradientFillColors = intArrayOf(Color.parseColor("#F2C788"), Color.TRANSPARENT)
+            lineChart.animate(list)
+            lineChart.onDataPointClickListener = { index, _, _ ->
+                Toast.makeText(
+                    requireContext(),
+                    ( if(list.isEmpty()) filNothingListMonth() else list )
+                        .toList().get(index).second.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+    fun delAllSelectChart(){
+        binding.selectedStatisticWeek.visibility = View.GONE
+        binding.selectedStatisticMonth.visibility = View.GONE
+        binding.selectedStatisticYear.visibility = View.GONE
+        binding.selectedLineYear.visibility = View.GONE
+        binding.selectedLineMonth.visibility = View.GONE
+    }
 
     //support method
+    fun getMediumForWeek(map: LinkedHashMap<String, Float>): ArrayList<Pair<String, Float>> {
+        val calendarDate = Calendar.getInstance()
+        calendarDate[Calendar.HOUR_OF_DAY] = 12
+        calendarDate[Calendar.MINUTE] = 0
+        calendarDate[Calendar.SECOND] = 0
+        calendarDate[Calendar.MILLISECOND] = 0
+        calendarDate.add(Calendar.WEEK_OF_MONTH, -1)
+
+        val newMap = java.util.LinkedHashMap<String, Float>()
+
+        for(i in 0..7){
+            if(map.get(getTime(calendarDate.getTimeInMillis())) == null)
+                newMap.put(getTime(calendarDate.getTimeInMillis()), 0f);
+            else
+                newMap.put(getTime(calendarDate.timeInMillis), map.get(getTime(calendarDate.getTimeInMillis()))!!.toFloat());
+
+            calendarDate.add(Calendar.DAY_OF_WEEK, 1);
+        }
+
+        calendarDate.add(Calendar.WEEK_OF_MONTH, -1)
+
+        val listForReturn = ArrayList<Pair<String, Float>>()
+        
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), newMap[getTime(calendarDate.timeInMillis)]!!))
+        
+        return listForReturn
+    }
     fun getMediumForMonth(map: LinkedHashMap<String, Float>): ArrayList<Pair<String, Float>> {
         val calendarDate = Calendar.getInstance()
         calendarDate[Calendar.HOUR_OF_DAY] = 12
@@ -371,6 +719,13 @@ class StatisticFragment : Fragment() {
             calendarDate.add(Calendar.DAY_OF_WEEK, 1);
         }
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            val listData = ArrayList<Pair<String, Float>>()
+            newMap.forEach { date, result ->  listData.add(Pair("", result))}
+
+            setSelectedChartLineMonth(listData)
+        }
+
         calendarDate.add(Calendar.DAY_OF_WEEK, -30)
 
         var a = 0f; var b = 0f; var c = 0f; var d = 0f
@@ -378,32 +733,28 @@ class StatisticFragment : Fragment() {
 
         for (i in 0..30) {
             if (i < 7) {
-                a_++; a += newMap[getTime(calendarDate.timeInMillis)]!!
+                a_++; a += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             } else if (i < 14 && i > 6) {
-                b_++; b += newMap[getTime(calendarDate.timeInMillis)]!!
+                b_++; b += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             } else if (i < 21 && i > 13) {
-                c_++; c += newMap[getTime(calendarDate.timeInMillis)]!!
+                c_++; c += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             } else {
-                d_++; d += newMap[getTime(calendarDate.timeInMillis)]!!
+                d_++; d += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
+            calendarDate.add(Calendar.DAY_OF_WEEK, 1)
+//            Log.d("Grage month", "${newMap[getTime(calendarDate.timeInMillis)]!!} -- $a - $a_, $b - $b_, $c - $c_, $d - $d_")
         }
         val listForReturn = ArrayList<Pair<String, Float>>()
 
         calendarDate.add(Calendar.DAY_OF_WEEK, 3)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), a/a_))
+        listForReturn.add(Pair(".." + getTime(calendarDate.timeInMillis) + "..", a/a_))
         calendarDate.add(Calendar.DAY_OF_WEEK, 7)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), b/b_))
+        listForReturn.add(Pair(".." + getTime(calendarDate.timeInMillis) + "..", b/b_))
         calendarDate.add(Calendar.DAY_OF_WEEK, 7)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), c/c_))
+        listForReturn.add(Pair(".." + getTime(calendarDate.timeInMillis) + "..", c/c_))
         calendarDate.add(Calendar.DAY_OF_WEEK, 7)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), d/d_))
+        listForReturn.add(Pair(".." + getTime(calendarDate.timeInMillis) + "..", d/d_))
 
-        //TODO clear this. just for test
-        listForReturn.clear()
-        listForReturn.add(Pair("---", 4.2f))
-        listForReturn.add(Pair("---", 2.4f))
-        listForReturn.add(Pair("---", 4.9f))
-        listForReturn.add(Pair("---", 2.9f))
         return listForReturn
     }
     fun getMediumForYear(map: LinkedHashMap<String, Float>): ArrayList<Pair<String, Float>> {
@@ -427,6 +778,14 @@ class StatisticFragment : Fragment() {
             calendarDate.add(Calendar.DAY_OF_WEEK, 1);
         }
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            val listPrepareData = ArrayList<Pair<String, Float>>()
+            newMap.forEach { date, result ->  listPrepareData.add(Pair(date, result))}
+            val listData = listPrepareData.joinConsecutive{a, b -> (a+b) / 2f}
+
+            setSelectedChartLineYear(listData)
+        }
+
         calendarDate.set(Calendar.MONTH, 0)
         calendarDate.set(Calendar.DAY_OF_MONTH, 1)
 
@@ -435,87 +794,93 @@ class StatisticFragment : Fragment() {
 
         for (i in 0..365) {
             if (i < 30) {
-                monthCount[0]++; monthGrade[0] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[0]++; monthGrade[0] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 60) {
-                monthCount[1]++; monthGrade[1] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[1]++; monthGrade[1] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 90) {
-                monthCount[2]++; monthGrade[2] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[2]++; monthGrade[2] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 120) {
-                monthCount[3]++; monthGrade[3] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[3]++; monthGrade[3] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 150) {
-                monthCount[4]++; monthGrade[4] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[4]++; monthGrade[4] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 180) {
-                monthCount[5]++; monthGrade[5] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[5]++; monthGrade[5] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 210) {
-                monthCount[6]++; monthGrade[6] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[6]++; monthGrade[6] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 240) {
-                monthCount[7]++; monthGrade[7] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[7]++; monthGrade[7] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 270) {
-                monthCount[8]++; monthGrade[8] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[8]++; monthGrade[8] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 300) {
-                monthCount[9]++; monthGrade[9] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[9]++; monthGrade[9] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else if (i < 330) {
-                monthCount[10]++; monthGrade[10] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[10]++; monthGrade[10] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
             else {
-                monthCount[11]++; monthGrade[11] += newMap[getTime(calendarDate.timeInMillis)]!!
+                monthCount[11]++; monthGrade[11] += newMap[getTime(calendarDate.timeInMillis)] ?: 0f
             }
+            calendarDate.add(Calendar.DAY_OF_WEEK, 1)
 
         }
         val listForReturn = ArrayList<Pair<String, Float>>()
 
         calendarDate.add(Calendar.DAY_OF_MONTH, 15)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[0]/monthCount[0]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[1]/monthCount[1]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[2]/monthCount[2]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[3]/monthCount[3]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[4]/monthCount[4]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[5]/monthCount[5]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[6]/monthCount[6]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[7]/monthCount[7]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[8]/monthCount[8]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[9]/monthCount[9]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[10]/monthCount[10]))
-        calendarDate.add(Calendar.MONTH, 1)
-        listForReturn.add(Pair(getTime(calendarDate.timeInMillis), monthGrade[11]/monthCount[11]))
-        calendarDate.add(Calendar.MONTH, 1)
+        for(i in 0..11){
+            val month = getString(when(i){
+                0 -> R.string.month_Jan
+                1 -> R.string.month_Feb
+                2 -> R.string.month_Mar
+                3 -> R.string.month_Apr
+                4 -> R.string.month_May
+                5 -> R.string.month_Jun
+                6 -> R.string.month_Jul
+                7 -> R.string.month_Aug
+                8 -> R.string.month_Sep
+                9 -> R.string.month_Okt
+                10 -> R.string.month_Nov
+                11 -> R.string.month_Dec
+                else -> {R.string.month_Apr}
+            })
+
+            listForReturn.add(Pair(month, monthGrade[i]/monthCount[i]))
+            calendarDate.add(Calendar.MONTH, 1)
+        }
 
 
-        //TODO clear this. just for test
-        listForReturn.clear()
-        listForReturn.add(Pair("---", 4.2f))
-        listForReturn.add(Pair("---", 2.4f))
-        listForReturn.add(Pair("---", 4.9f))
-        listForReturn.add(Pair("---", 2.9f))
-        listForReturn.add(Pair("---", 4.2f))
-        listForReturn.add(Pair("---", 2.4f))
-        listForReturn.add(Pair("---", 4.9f))
-        listForReturn.add(Pair("---", 2.9f))
-        listForReturn.add(Pair("---", 4.2f))
-        listForReturn.add(Pair("---", 2.4f))
-        listForReturn.add(Pair("---", 4.9f))
-        listForReturn.add(Pair("---", 2.9f))
         return listForReturn
+    }
+    fun List<Pair<String, Float>>.joinConsecutive(reducer: (Float, Float) -> Float): List<Pair<String, Float>> {
+        val result = mutableListOf<Pair<String, Float>>()
+        var count = 0
+        var firstValue: Float? = null
+        var secondValue: Float? = null
+        this.forEach { (day, value) ->
+            when (count % 2) {
+                0 -> {
+                    firstValue = value
+                }
+                1 -> {
+                    secondValue = value
+                    if (firstValue != null && secondValue != null) {
+                        result.add(Pair("", reducer(firstValue ?: 0f, secondValue ?: 0f)))
+                    }
+                    firstValue = null
+                    secondValue = null
+                }
+            }
+            count++
+        }
+        return result
     }
 
     fun toggleChildLayout(childLayout: LinearLayout) {
@@ -570,7 +935,7 @@ class StatisticFragment : Fragment() {
         }
     }
 
-    fun filNothingList():List<Pair<String, Float>> {
+    fun filNothingListWeek():List<Pair<String, Float>> {
         val nothingList = ArrayList<Pair<String, Float>>()
         val calendar = Calendar.getInstance()
 
@@ -580,9 +945,49 @@ class StatisticFragment : Fragment() {
             nothingList.add(Pair(date, 0f))
             calendar.add(Calendar.DAY_OF_WEEK, 1)
         }
+        return nothingList
+    }
+    fun filNothingListMonth():List<Pair<String, Float>> {
+        val nothingList = ArrayList<Pair<String, Float>>()
+        val calendar = Calendar.getInstance()
+
+        calendar.add(Calendar.DAY_OF_WEEK, -26)
+        nothingList.add(Pair(".." + getTime(calendar.timeInMillis) + "..", 0f))
+        calendar.add(Calendar.DAY_OF_WEEK, 7)
+        nothingList.add(Pair(".." + getTime(calendar.timeInMillis) + "..", 0f))
+        calendar.add(Calendar.DAY_OF_WEEK, 7)
+        nothingList.add(Pair(".." + getTime(calendar.timeInMillis) + "..", 0f))
+        calendar.add(Calendar.DAY_OF_WEEK, 7)
+        nothingList.add(Pair(".." + getTime(calendar.timeInMillis) + "..", 0f))
+        calendar.add(Calendar.DAY_OF_WEEK, 7)
 
         return nothingList
     }
+    fun filNothingListYear():List<Pair<String, Float>> {
+        val nothingList = ArrayList<Pair<String, Float>>()
+
+        for(i in 0..11){
+            val month = getString(when(i){
+                0 -> R.string.month_Jan
+                1 -> R.string.month_Feb
+                2 -> R.string.month_Mar
+                3 -> R.string.month_Apr
+                4 -> R.string.month_May
+                5 -> R.string.month_Jun
+                6 -> R.string.month_Jul
+                7 -> R.string.month_Aug
+                8 -> R.string.month_Sep
+                9 -> R.string.month_Okt
+                10 -> R.string.month_Nov
+                11 -> R.string.month_Dec
+                else -> {R.string.month_Apr}
+            })
+
+            nothingList.add(Pair(month, 0f))
+        }
+        return nothingList
+    }
+
 
     @SuppressLint("SimpleDateFormat")
     fun getTime(time: Long) = SimpleDateFormat("dd.MM").format(Date(time))

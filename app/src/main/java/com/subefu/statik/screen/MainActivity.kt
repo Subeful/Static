@@ -10,6 +10,7 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -17,16 +18,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.subefu.statik.R
+import com.subefu.statik.adapter.HabitCardAdapter
 import com.subefu.statik.databinding.ActivityMainBinding
 import com.subefu.statik.db.ModelHabit
 import com.subefu.statik.db.MyDatabase
 import com.subefu.statik.screen.fragment.GlobalFragment
+import com.subefu.statik.screen.fragment.GlobalFragment.Companion
 import com.subefu.statik.screen.fragment.SettingsFragment
 import com.subefu.statik.screen.fragment.StatisticFragment
 import com.subefu.statik.utils.Constant
+import com.subefu.statik.utils.RemakeFragment
 import com.subefu.statik.utils.UpdateFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 
@@ -36,6 +42,10 @@ class MainActivity : AppCompatActivity(), UpdateFragment {
     lateinit var botNavMain: BottomNavigationView
 
     lateinit var config: SharedPreferences
+
+    companion object{
+        var data = 0L
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,16 +70,26 @@ class MainActivity : AppCompatActivity(), UpdateFragment {
         botNavMain.selectedItemId = R.id.bot_nav_menu_home
     }
     fun init(){
+        Log.d("CREATE SCREEN", "Main activity")
+        setCurrentDate()
+
         setFragment(GlobalFragment())
         setConfigBotNav()
 
         config = getSharedPreferences(Constant.CONFIG, MODE_PRIVATE)
 
         setTheme(config.getString(Constant.THEME, "system").toString())
+    }
 
-        config.edit().putLong(Constant.FIRST_ENTRANCE, 1733821200000L).apply()
-        config.edit().putLong(Constant.LAST_ENTRANCE, 1734598800000L).apply()
-        config.edit().putInt(Constant.ACTIVE_DAY, 5).apply()
+    @SuppressLint("SimpleDateFormat")
+    fun setCurrentDate(){
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 12)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        data = calendar.timeInMillis
+        Log.d("Current date main", calendar.timeInMillis.toString())
     }
 
     fun prepareForFirstLaunch(){
@@ -80,7 +100,6 @@ class MainActivity : AppCompatActivity(), UpdateFragment {
             config.edit().putBoolean(Constant.IS_FIRST_LAUNCH, false).apply()
         }
     }
-
     fun createChanel(){
         val manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -95,7 +114,6 @@ class MainActivity : AppCompatActivity(), UpdateFragment {
             }
         }
     }
-
     fun createHabit(){
         val dao = MyDatabase.getDb(baseContext).getDao()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -146,6 +164,11 @@ class MainActivity : AppCompatActivity(), UpdateFragment {
         }
         setLanguage()
     }
+
+    public fun remakeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(binding.globalFrameLayout.id, fragment).commit()
+    }
+
     fun setLanguage(){
         val language = config.getString(Constant.LANGUAGE, "ru")
         val locale = Locale(language.toString())

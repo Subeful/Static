@@ -50,7 +50,7 @@ class GradeActivity : AppCompatActivity() {
     val listHabitCard = ArrayList<HabitCard>()
 
     var currentHabit = 0
-    private var date = 0L
+    var date = MainActivity.data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,16 +118,12 @@ class GradeActivity : AppCompatActivity() {
     fun init(){
         dao = MyDatabase.getDb(baseContext).getDao()
         config = getSharedPreferences(Constant.CONFIG, 0)
-        date = getDate()
         Log.d("Data for grade", "$date")
 
         loadHabitList()
         setHabitMap()
         showHabit(habitList[0], resultList[0])
 
-        for (i in 0..habitList.size-1){
-            Log.d("Test", "$i. ${habitList[i]} -- ${resultList[i]}")
-        }
         if(config.getLong(Constant.FIRST_ENTRANCE, 0L) == 0L){
             config.edit().putLong(Constant.FIRST_ENTRANCE, date).apply()
         }
@@ -148,61 +144,61 @@ class GradeActivity : AppCompatActivity() {
                     if(isExist == null) dao.addNewRecordForWater(ModelHabitWater(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordWater(result.toInt(), date)
             }}
-            if(habit == "steps"){
+            else if(habit == "steps"){
                 launch { val isExist = dao.selectCurrentDataForSteps(date)
                     if(isExist == null) dao.addNewRecordForSteps(ModelHabitSteps(day_date = date, day_result = result.toFloat()))
                     else dao.updateRecordSteps(result.toFloat(), date)
                 }
             }
-            if(habit == "mood"){
+            else if(habit == "mood"){
                 launch { val isExist = dao.selectCurrentDataForMood(date)
                     if(isExist == null) dao.addNewRecordForMood(ModelHabitMood(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordMood(result.toInt(), date)
                 }
             }
-            if(habit == "weather"){
+            else if(habit == "weather"){
                 launch { val isExist = dao.selectCurrentDataForWeather(date)
                     if(isExist == null) dao.addNewRecordForWeather(ModelHabitWeather(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordWeather(result.toInt(), date)
                 }
             }
-            if(habit == "cost"){
+            else if(habit == "cost"){
                 launch { val isExist = dao.selectCurrentDataForCost(date)
                     if(isExist == null) dao.addNewRecordForCost(ModelHabitCost(day_date = date, day_result = result.toFloat()))
                     else dao.updateRecordCost(result.toFloat(), date)
                 }
             }
-            if(habit == "sport"){
+            else if(habit == "sport"){
                 launch { val isExist = dao.selectCurrentDataForSport(date)
                     if(isExist == null) dao.addNewRecordForSport(ModelHabitSport(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordSport(result.toInt(), date)
                 }
             }
-            if(habit == "comment"){
+            else if(habit == "comment"){
                 launch { val isExist = dao.selectCurrentDataForComment(date)
                     if(isExist == null) dao.addNewRecordForComment(ModelHabitComment(day_date = date, day_result = result.toString()))
                     else dao.updateRecordComment(result.toString(), date)
                 }
             }
-            if(habit == "words"){
+            else if(habit == "words"){
                 launch { val isExist = dao.selectCurrentDataForWords(date)
                     if(isExist == null) dao.addNewRecordForWords(ModelHabitWords(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordWords(result.toInt(), date)
                 }
             }
-            if(habit == "productive"){
+            else if(habit == "productive"){
                 launch { val isExist = dao.selectCurrentDataForProductive(date)
                     if(isExist == null) dao.addNewRecordForProductive(ModelHabitProductive(day_date = date, day_result = result.toInt()))
                     else dao.updateRecordProductive(result.toInt(), date)
                 }
             }
-            if(habit == "sleep"){
+            else if(habit == "sleep"){
                 launch { val isExist = dao.selectCurrentDataForSleep(date)
                     if(isExist == null) dao.addNewRecordForSleep(ModelHabitSleep(day_date = date, day_result = result.toFloat()))
                     else dao.updateRecordSleep(result.toFloat(), date)
                 }
             }
-            if(habit == "screen time"){
+            else if(habit == "screen time"){
                 launch { val isExist = dao.selectCurrentDataForScreenTime(date)
                     if(isExist == null) dao.addNewRecordForScreenTime(ModelHabitScreenTime(day_date = date, day_result = result.toFloat()))
                     else dao.updateRecordScreenTime(result.toFloat(), date)
@@ -263,13 +259,17 @@ class GradeActivity : AppCompatActivity() {
         }
     }
 
-    fun getDate(): Long{
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 12)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        Log.d("Current date", calendar.timeInMillis.toString())
-        return calendar.timeInMillis
-    }
+//    fun getDate(): Long{
+//        var time = intent.getLongExtra(Constant.DATE, 0)
+//        if(time == 0L){
+//            val calendar = Calendar.getInstance()
+//            calendar.set(Calendar.HOUR_OF_DAY, 12)
+//            calendar.set(Calendar.MINUTE, 0)
+//            calendar.set(Calendar.SECOND, 0)
+//            calendar.set(Calendar.MILLISECOND, 0)
+//            time = calendar.timeInMillis
+//        }
+//        Log.d("Current date", time.toString())
+//        return time
+//    }
 }

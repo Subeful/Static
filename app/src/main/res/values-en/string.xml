@@ -12,15 +12,23 @@
     <string name="system_period">Period</string>
     <string name="system_edit">Edit</string>
     <string name="system_complete">Complete</string>
+    <string name="system_select_date">Select date</string>
+
+    <string name="system_not_found_active_habit">No active habits found.</string>
+    <string name="system_not_found_habit_go_active">Go to the archive.</string>
+    <string name="system_not_found_archive_habit">No archive habits found</string>
+    <string name="system_not_found_habit_go_archive">Go to the active.</string>
 
     <string name="system_creating">Creating...</string>
-    <string name="system_thatks">Thanks</string>
+    <string name="system_rating_best">Thanks!</string>
+    <string name="system_rating_notmal">Let us know what upsets you. We strive to become better!</string>
+    <string name="system_rating_bed">We will work harder!</string>
 
     //statistic
     <string name="stat_dayOnApp">Number of days \nin the app</string>
     <string name="stat_currentSeries">Current series \nwithout skipping days</string>
     <string name="stat_record">Current series \nwithout skipping days</string>
-    <string name="stat_entrance">Frequency of saving statistics:</string>
+    <string name="stat_entrance">Glasses of water:</string>
     <string name="stat_donat_dayOnApp">Days in the app:</string>
 
     <string name="stat_activeDay">Active day</string>
@@ -80,5 +88,18 @@
     <string name="time_week">Week</string>
     <string name="time_month">Month</string>
     <string name="time_year">Year</string>
+
+    <string name="month_Jan">Jan</string>
+    <string name="month_Feb">Feb</string>
+    <string name="month_Mar">Mar</string>
+    <string name="month_Apr">Apr</string>
+    <string name="month_May">May</string>
+    <string name="month_Jun">Jun</string>
+    <string name="month_Jul">Jul</string>
+    <string name="month_Aug">Aug</string>
+    <string name="month_Sep">Sep</string>
+    <string name="month_Okt">Okt</string>
+    <string name="month_Nov">Nov</string>
+    <string name="month_Dec">Dec</string>
 
 </resources>

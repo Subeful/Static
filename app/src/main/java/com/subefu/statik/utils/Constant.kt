@@ -15,6 +15,10 @@ class Constant{
 
         val NOTIFY_ENABLE = "notification_enable"
         val NOTIFY_TIME = "notification_time"
+        val DATE = "date"
+        val MODE = "mode"
+        val ACTIVE = "active"
+        val ARCHIVE = "archive"
 
         //intent flag
         val HABIT_NAME = "habit_name"

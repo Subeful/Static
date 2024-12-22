@@ -146,14 +146,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/habit_cost" />
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chipHabit_comment"
-                                style="@style/MyThemeFilter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:text="@string/habit_comment" />
-
                         </com.google.android.material.chip.ChipGroup>
 
                     </HorizontalScrollView>
@@ -389,9 +381,9 @@
                 </LinearLayout>
 
                 <TextView
-                    style="@style/MyThemeText"
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="3dp"
+                    android:textColor="@color/grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/akatab"
@@ -410,9 +402,9 @@
                     app:chart_smoothLine="true" />
 
                 <TextView
-                    style="@style/MyThemeText"
                     android:layout_marginTop="60dp"
                     android:layout_marginBottom="3dp"
+                    android:textColor="@color/grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/akatab"
@@ -573,8 +565,30 @@
                     android:layout_marginBottom="90dp"
                     app:chart_barsColor="@color/accent"
                     app:chart_barsRadius="15dp"
-                    app:chart_labelsSize="12sp"
+                    app:chart_labelsSize="10sp"
                     app:chart_spacing="5dp" />
+                <com.db.williamchart.view.LineChartView
+                    android:id="@+id/selected_line_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:chart_axis="x"
+                    android:paddingVertical="10dp"
+                    app:chart_labelsSize="8sp"
+                    app:chart_lineColor="@color/accent"
+                    app:chart_labelsColor="@color/white"
+                    app:chart_lineThickness="2dp"
+                    app:chart_smoothLine="true" />
+                <com.db.williamchart.view.LineChartView
+                    android:id="@+id/selected_line_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:chart_axis="x"
+                    android:paddingVertical="10dp"
+                    app:chart_labelsSize="8sp"
+                    app:chart_lineColor="@color/accent"
+                    app:chart_labelsColor="@color/white"
+                    app:chart_lineThickness="2dp"
+                    app:chart_smoothLine="true" />
             </LinearLayout>
 
         </LinearLayout>

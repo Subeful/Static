@@ -1,9 +1,12 @@
 package com.subefu.statik.screen
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.media.audiofx.AudioEffect.Descriptor
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -17,6 +20,7 @@ import com.subefu.statik.db.MyDatabase
 import com.subefu.statik.model.HabitCard
 import com.subefu.statik.model.HabitStatus
 import com.subefu.statik.screen.fragment.SettingsFragment
+import com.subefu.statik.utils.Constant
 import com.subefu.statik.utils.UpdateFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +51,8 @@ class HabitStorageActivity : AppCompatActivity() {
                     Log.d("HabitStatus", i); Log.d("HabitList", "size ${newList.size}")
                 }
                 adapter.updateList(newList)
+                if(newList.size == 0)
+                    showLink()
             }
         }
         else if(mode == "archive"){
@@ -58,6 +64,8 @@ class HabitStorageActivity : AppCompatActivity() {
                     Log.d("HabitStatus", i); Log.d("HabitList", "size ${newList.size}")
                 }
                 adapter.updateList(newList)
+                if(newList.size == 0)
+                    showLink()
             }
         }
 
@@ -65,10 +73,38 @@ class HabitStorageActivity : AppCompatActivity() {
     }
 
     fun init(){
-        mode = intent.getStringExtra("config").toString()
+        mode = intent.getStringExtra(Constant.MODE).toString()
         dao = MyDatabase.getDb(baseContext).getDao()
         adapter = HabitStatusAdapter(baseContext, ArrayList<HabitStatus>(), mode, lifecycleScope)
 
         binding.habitStatusRv.adapter = adapter
+    }
+
+    fun showLink(){
+        Log.d("Status habit", "${adapter.listHabit.size}")
+        if(adapter.listHabit.size != 0)
+            return
+
+        if(mode == "active"){
+            binding.storageNotFoundText.setText(getString(R.string.system_not_found_active_habit))
+            binding.storageNotFoundLink.setText(getString(R.string.system_not_found_habit_go_archive))
+            binding.storageNotFoundLink.setOnClickListener {
+                finish();
+                val intent = Intent(this, HabitStorageActivity::class.java)
+                intent.putExtra(Constant.MODE, Constant.ARCHIVE)
+                startActivity(intent)
+            }
+        } else{
+            binding.storageNotFoundText.setText(getString(R.string.system_not_found_archive_habit))
+            binding.storageNotFoundLink.setText(getString(R.string.system_not_found_habit_go_active))
+            binding.storageNotFoundLink.setOnClickListener {
+                finish();
+                val intent = Intent(this, HabitStorageActivity::class.java)
+                intent.putExtra(Constant.MODE, Constant.ACTIVE)
+                startActivity(intent)
+            }
+        }
+
+        binding.storageNotFound.visibility = View.VISIBLE
     }
 }

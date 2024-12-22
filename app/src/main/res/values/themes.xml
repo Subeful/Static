@@ -49,4 +49,14 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#636363</item>
     </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorSurfaceContainerHigh">@color/light_grey</item>
+        <item name="colorOnSurfaceVariant">@color/l_dark</item>
+        <item name="colorOnSurface">@color/l_dark</item>
+        <item name="itemTextColor">@color/l_dark</item>
+        <item name="itemStrokeColor">@color/accent</item>
+        <item name="colorPrimary">#C3934C</item>
+        <item name="itemFillColor">@color/accent</item>
+    </style>
 </resources>

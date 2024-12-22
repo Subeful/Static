@@ -12,15 +12,22 @@
     <string name="system_period">Период</string>
     <string name="system_edit">Изменить</string>
     <string name="system_complete">Готово</string>
+    <string name="system_select_date">Выбор даты</string>
+    <string name="system_not_found_active_habit">Активных привычек не найдено.</string>
+    <string name="system_not_found_habit_go_active">Перейти в активные.</string>
+    <string name="system_not_found_archive_habit">Архивных привычек не найдено.</string>
+    <string name="system_not_found_habit_go_archive">Перейти в архив.</string>
 
     <string name="system_creating">В разработке</string>
-    <string name="system_thatks">Спасибо</string>
+    <string name="system_rating_best">Спасибо!</string>
+    <string name="system_rating_notmal">Сообщите нам что вас расстроило. Мы стремимся стать лучше!</string>
+    <string name="system_rating_bed">Мы будем работать усерднее!</string>
 
     //statistic
     <string name="stat_dayOnApp">Количество дней \nв приложении</string>
     <string name="stat_currentSeries">Текущая серия \nбез пропусков дней</string>
     <string name="stat_record">Рекорд серии \nбез пропусков дней</string>
-    <string name="stat_entrance">Частота сохранения статистики:</string>
+    <string name="stat_entrance">Стаканы воды:</string>
     <string name="stat_donat_dayOnApp">Дней в приложении:</string>
 
     <string name="stat_activeDay">Активный день</string>
@@ -81,5 +88,18 @@
     <string name="time_week">Неделя</string>
     <string name="time_month">Месяц</string>
     <string name="time_year">Год</string>
+
+    <string name="month_Jan">Янв</string>
+    <string name="month_Feb">Фев</string>
+    <string name="month_Mar">Мар</string>
+    <string name="month_Apr">Апр</string>
+    <string name="month_May">Май</string>
+    <string name="month_Jun">Июн</string>
+    <string name="month_Jul">Июл</string>
+    <string name="month_Aug">Авг</string>
+    <string name="month_Sep">Сен</string>
+    <string name="month_Okt">Окт</string>
+    <string name="month_Nov">Ноя</string>
+    <string name="month_Dec">Дек</string>
 
 </resources>

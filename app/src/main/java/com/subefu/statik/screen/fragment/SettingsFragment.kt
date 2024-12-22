@@ -50,10 +50,7 @@ class SettingsFragment : Fragment() {
         config = requireContext().getSharedPreferences(Constant.CONFIG, 0)
 
         binding.setCustomTheme.setOnClickListener { showChooseTheme() }
-        binding.setCustomColorDesibn.setOnClickListener {
-        //            showChooseColor()
-                    Toast.makeText(requireContext(), getString(R.string.system_creating), Toast.LENGTH_SHORT).show()
-        }
+//        binding.setCustomColorDesibn.setOnClickListener { }
 
         binding.setCustomLanguage.setOnClickListener { showChooseLanguage() }
 
@@ -65,12 +62,12 @@ class SettingsFragment : Fragment() {
 
         binding.setHabitActive.setOnClickListener {
             val intent = Intent(requireContext(), HabitStorageActivity::class.java)
-            intent.putExtra("config", "active")
+            intent.putExtra(Constant.MODE, Constant.ACTIVE)
             startActivity(intent)
         }
         binding.setHabitArchive.setOnClickListener {
             val intent = Intent(requireContext(), HabitStorageActivity::class.java)
-            intent.putExtra("config", "archive")
+            intent.putExtra(Constant.MODE, Constant.ARCHIVE)
             startActivity(intent)
         }
 
@@ -82,17 +79,27 @@ class SettingsFragment : Fragment() {
         functionUpdateFragment = context as UpdateFragment
     }
 
+    @SuppressLint("MissingInflatedId")
     fun showRating(){
         val view = layoutInflater.inflate(R.layout.alert_rating, null)
 
         val rating = view.findViewById<RatingBar>(R.id.ratingBar)
+        val complete = view.findViewById<Button>(R.id.rating_complete)
 
         val alert = AlertDialog.Builder(requireContext()).setView(view)
         val dialog = alert.create()
         dialog.window?.setBackgroundDrawable(requireContext().getDrawable(R.drawable.shape_alert))
         dialog.setOnCancelListener {
-            if(rating.rating > 3)
-                Toast.makeText(requireContext(), requireContext().getString(R.string.system_thatks), Toast.LENGTH_SHORT).show()
+        }
+        complete.setOnClickListener {
+            dialog.cancel()
+
+            Toast.makeText(requireContext(), getString(when(rating.rating){
+                in 0f..3f -> R.string.system_rating_bed
+                in 3.5f..4.5f -> R.string.system_rating_notmal
+                5f -> R.string.system_rating_best
+                else -> {1}
+            }), Toast.LENGTH_LONG).show()
         }
         dialog.show()
     }
