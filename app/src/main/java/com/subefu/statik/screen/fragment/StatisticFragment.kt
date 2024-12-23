@@ -16,11 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import com.subefu.statik.R
 import com.subefu.statik.databinding.FragmentStatisticBinding
 import com.subefu.statik.db.Dao
+import com.subefu.statik.db.ModelDays
 import com.subefu.statik.db.MyDatabase
+import com.subefu.statik.screen.MainActivity
 import com.subefu.statik.utils.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 
@@ -122,11 +125,52 @@ class StatisticFragment : Fragment() {
     }
 
     fun setMainStatistic(){
-        //заполнить верхнюю панель, 3 числа
-        /*binding.mainStatDayInApp.setText("")
-        binding.mainStatCurrentSeries.setText("")
-        binding.mainStatRecordSeries.setText("")*/
+        lifecycleScope.launch(Dispatchers.IO) {
+            val period = ((config.getLong(Constant.LAST_ENTRANCE, 0) - config.getLong(Constant.FIRST_ENTRANCE, 0))
+                    / 86_400_000) + 1
+            launch(Dispatchers.Main) { binding.mainStatDayInApp.setText(period.toString()) }
+            Log.d("Period", period.toString())
+            //
+            val listDays = dao.selectAllDays()
+            val currentSeries = getCurrentSeries(listDays)
+            launch(Dispatchers.Main) { binding.mainStatCurrentSeries.setText(currentSeries.toString()) }
+            Log.d("Series", currentSeries.toString())
+            //
+            launch(Dispatchers.Main) {
+                binding.mainStatRecordSeries.setText(config.getInt(Constant.MAX_SERIES, 0).toString())
+            }
+            Log.d("Max series", config.getInt(Constant.MAX_SERIES, 0).toString())
+        }
     }
+    fun getCurrentSeries(listDays: List<ModelDays>): Int{
+        Log.d("INFO", "${listDays.size}")
+        if(listDays.size == 0)
+            return 0
+        var series = 0
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = MainActivity.data
+        calendar[Calendar.HOUR_OF_DAY] = 12
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+
+        for(day in listDays.size-1 downTo 0 ){
+            if(listDays[day].days_date != calendar.timeInMillis)
+                break
+            else
+                series++
+            Log.d("Current series", " calendar: ${getTime(calendar.timeInMillis)}, " +
+                    "date: ${getTime(listDays[day].days_date)}, series: $series")
+            calendar.add(Calendar.DAY_OF_WEEK, -1)
+        }
+
+        if(config.getInt(Constant.MAX_SERIES, 0) < series)
+            config.edit().putInt(Constant.MAX_SERIES, series).apply()
+
+        return series
+    }
+
     fun selectingHabit(habit: String, period: String){
         lifecycleScope.launch(Dispatchers.IO) {
             when(habit){
@@ -157,7 +201,7 @@ class StatisticFragment : Fragment() {
             //choose list
             if(lineList.size == 1){
                 val newList = ArrayList<Pair<String, Float>>()
-                newList.add(Pair((date-86400001).toString(), 0f))
+                newList.add(Pair(getTime((date-86400001)), 0f))
                 newList.add(lineList[0])
 
                 lineList.clear()

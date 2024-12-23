@@ -14,6 +14,7 @@ import com.subefu.statik.R
 import com.subefu.statik.databinding.ActivityGrageBinding
 import com.subefu.statik.databinding.FragmentGlobalBinding
 import com.subefu.statik.db.Dao
+import com.subefu.statik.db.ModelDays
 import com.subefu.statik.db.ModelHabitComment
 import com.subefu.statik.db.ModelHabitCost
 import com.subefu.statik.db.ModelHabitMood
@@ -69,6 +70,7 @@ class GradeActivity : AppCompatActivity() {
                 binding.gradeActionOk.visibility = View.VISIBLE
             }
 
+            updateLastEntrance()
         }
         binding.gradeActionOk.setOnClickListener {
             saveResults(habitList[currentHabit])
@@ -76,6 +78,9 @@ class GradeActivity : AppCompatActivity() {
         }
         binding.gradeActionComplete.setOnClickListener {
             saveResults(habitList[currentHabit])
+
+            updateLastEntrance()
+
             finish()
         }
 
@@ -113,7 +118,20 @@ class GradeActivity : AppCompatActivity() {
             binding.gradeActionResult.setText(currentResult)
         }
     }
-
+    fun updateLastEntrance(){
+        if(config.getLong(Constant.LAST_ENTRANCE, 0L) != date){
+            Log.d("Entrance info", "${config.getLong(Constant.FIRST_ENTRANCE, 0L)} " +
+                    "- ${config.getLong(Constant.LAST_ENTRANCE, 0L)}")
+            config.edit().putLong(Constant.LAST_ENTRANCE, date).apply()
+            config.edit().putInt(Constant.ACTIVE_DAY, config.getInt(Constant.ACTIVE_DAY, 0) + 1).apply()
+            Log.d("Entrance info", "${config.getLong(Constant.FIRST_ENTRANCE, 0L)} " +
+                    "- ${config.getLong(Constant.LAST_ENTRANCE, 0L)}")
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            if(dao.findDayForDate(date) == null)
+                dao.addNewDays(ModelDays(days_date = date))
+        }
+    }
 
     fun init(){
         dao = MyDatabase.getDb(baseContext).getDao()
@@ -122,18 +140,15 @@ class GradeActivity : AppCompatActivity() {
 
         loadHabitList()
         setHabitMap()
-        showHabit(habitList[0], resultList[0])
+
+        Log.d("now habit: ", "${habitList[currentHabit]}, ${resultList[currentHabit]}")
+        showHabit(habitList[currentHabit] ,resultList[currentHabit])
 
         if(config.getLong(Constant.FIRST_ENTRANCE, 0L) == 0L){
             config.edit().putLong(Constant.FIRST_ENTRANCE, date).apply()
         }
-        if(config.getLong(Constant.LAST_ENTRANCE, 0L) != date){
-            config.edit().putLong(Constant.LAST_ENTRANCE, date).apply()
-            config.edit().putInt(Constant.ACTIVE_DAY, config.getInt(Constant.ACTIVE_DAY, 0) + 1).apply()
-        }
-
         Log.d("Entrance info", "${config.getLong(Constant.FIRST_ENTRANCE, 0L)} " +
-                "- ${config.getLong(Constant.LAST_ENTRANCE, 0L)}")
+        "- ${config.getLong(Constant.LAST_ENTRANCE, 0L)}")
     }
 
     fun saveResults(habit: String){
@@ -210,6 +225,7 @@ class GradeActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     fun showHabit(habit: String, result: String){
         Log.d("now habit: ", "${habitList[currentHabit]}, ${resultList[currentHabit]}")
+        Log.d("new habit: ", "-$habit, $result")
         binding.gradeHabitImage.background = when(habit){
             "water" -> getDrawable(R.drawable.habit_wather_png)
             "steps" -> getDrawable(R.drawable.habit_steps_png)

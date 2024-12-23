@@ -30,5 +30,7 @@ class Constant{
         val FIRST_ENTRANCE = "first_entrance"
         val LAST_ENTRANCE = "last_entrance"
         val ACTIVE_DAY = "active_day"
+
+        val MAX_SERIES = "max_series"
     }
 }

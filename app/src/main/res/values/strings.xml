@@ -12,7 +12,12 @@
     <string name="system_period">Период</string>
     <string name="system_edit">Изменить</string>
     <string name="system_complete">Готово</string>
+
     <string name="system_select_date">Выбор даты</string>
+    <string name="system_select_time">Выберите время</string>
+
+    <string name="notification_message">Пришло время подвести итоги дня</string>
+
     <string name="system_not_found_active_habit">Активных привычек не найдено.</string>
     <string name="system_not_found_habit_go_active">Перейти в активные.</string>
     <string name="system_not_found_archive_habit">Архивных привычек не найдено.</string>

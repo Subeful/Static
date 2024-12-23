@@ -18,6 +18,14 @@ data class ModelHabit(
     var habit_target: Float = 0f
 )
 
+@Entity(tableName = "days")
+data class ModelDays(
+    @PrimaryKey(autoGenerate = true)
+    var days_id: Int = 0,
+    @ColumnInfo(name = "days_date")
+    var days_date: Long = 0L
+)
+
 @Entity(tableName = "water_days")
 data class ModelHabitWater(
     @PrimaryKey(autoGenerate = true)

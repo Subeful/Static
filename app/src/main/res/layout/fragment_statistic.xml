@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/MyThemeBackgroundScreen"
-    tools:context=".screen.StaticFragment">
+    tools:context=".screen.fragment.StatisticFragment">
 
     <LinearLayout
         android:id="@+id/stat_filter_panel"
@@ -277,7 +277,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_corner_radius"
@@ -397,7 +397,7 @@
                     android:paddingVertical="10dp"
                     app:chart_labelsSize="8sp"
                     app:chart_lineColor="@color/accent"
-                    app:chart_labelsColor="@color/white"
+                    app:chart_labelsColor="?attr/colorAccent"
                     app:chart_lineThickness="2dp"
                     app:chart_smoothLine="true" />
 

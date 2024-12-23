@@ -9,9 +9,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.subefu.statik.R
@@ -22,11 +25,13 @@ import java.sql.Date
 class NotificationReceiver : BroadcastReceiver() {
 
     var chanelId: String = "0209"
-    var title: String = "Hello"
-    var message: String = ""
-    var fullMessage: String = ""
 
     override fun onReceive(context: Context, intent: Intent) {
+
+        val config = context.getSharedPreferences(Constant.CONFIG, 0)
+        val message: String = if(config.getString(Constant.LANGUAGE, "en").toString() == "en")
+            "Time to note the stats of the day" else "Пришло время подвести итоги дня"
+
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         checkOnNotification(context)
@@ -37,19 +42,19 @@ class NotificationReceiver : BroadcastReceiver() {
         val resultPendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(context, chanelId)
-            .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
             .setShowWhen(true)
-            .setSmallIcon(R.drawable.logo)
+            .setSmallIcon(R.mipmap.ic_logo)
             .setContentIntent(resultPendingIntent)
             .build()
 
         notificationManager.notify(1, notification)
 
-        val config = context.getSharedPreferences(Constant.CONFIG, 0)
+
         if(config.getString(Constant.NOTIFY_ENABLE, "false") == "true"){
-            setNotificationRecevier(context, java.util.Date().time + 24 * 60 * 60 * 1000)
+            Log.d("ENABLE", config.getString(Constant.NOTIFY_ENABLE, "false").toString())
+            setNotificationRecevier(context, java.util.Date().time + 1000 * 60 * 60 * 24)
         }
     }
 

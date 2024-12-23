@@ -21,6 +21,16 @@ interface Dao {
     @Query("select habit_name from habits where habit_enable = 0")
     fun selectAllArchiveHabit(): Flow<List<String>>
 
+    //Days
+    @Insert
+    fun addNewDays(days: ModelDays)
+    @Query("select count(*) from days")
+    fun getCountDaysInApp(): Int
+    @Query("select * from days where days_date = :date limit 1")
+    fun findDayForDate(date: Long): ModelDays
+    @Query("select * from days")
+    fun selectAllDays(): List<ModelDays>
+
     //Water
     @Insert
     fun addNewRecordForWater(dayWater: ModelHabitWater)

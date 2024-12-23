@@ -11,6 +11,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,9 @@ import com.subefu.statik.recevier.NotificationReceiver
 import com.subefu.statik.screen.HabitStorageActivity
 import com.subefu.statik.utils.Constant
 import com.subefu.statik.utils.UpdateFragment
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 
 
 class SettingsFragment : Fragment() {
@@ -184,15 +187,18 @@ class SettingsFragment : Fragment() {
                     notifyTimeText.setTextColor(resources.getColor(R.color.n_light))
                 }
                 config.edit().putString(Constant.NOTIFY_ENABLE, "true").apply()
+                Log.d("ENABLE change", config.getString(Constant.NOTIFY_ENABLE, "null").toString())
             }
             else{
                 notifyTime.background = (resources.getDrawable(R.drawable.ic_system_notify_alarm_off))
                 notifyTimeText.setTextColor(resources.getColor(R.color.grey))
                 config.edit().putString(Constant.NOTIFY_ENABLE, "false").apply()
+                Log.d("ENABLE change", config.getString(Constant.NOTIFY_ENABLE, "null").toString())
             }
         }
 
-        val timePicker = MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).setHour(22).setMinute(0).setTitleText("Select Appointment time").build()
+        val timePicker = MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).setHour(22).setMinute(0)
+            .setTitleText(requireContext().getString(R.string.system_select_time)).build()
         notifyTime.setOnClickListener {
             timePicker.show(requireFragmentManager(), "tag")
         }
@@ -201,6 +207,8 @@ class SettingsFragment : Fragment() {
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.HOUR_OF_DAY, timePicker.hour);
             calendar.set(Calendar.MINUTE, timePicker.minute);
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
             timeAlarm = calendar.timeInMillis
         }
 
@@ -216,8 +224,9 @@ class SettingsFragment : Fragment() {
 
         complete.setOnClickListener {
             config.edit().putLong(Constant.NOTIFY_TIME, timeAlarm).apply()
+            config.edit().putString(Constant.NOTIFY_ENABLE, "true").apply()
             setNotificationRecevier(requireContext(), timeAlarm)
-
+            Log.d("Alarm", SimpleDateFormat("HH:mm:ss").format(Date(timeAlarm)))
             dialog.cancel()
         }
 

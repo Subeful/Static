@@ -12,7 +12,11 @@
     <string name="system_period">Period</string>
     <string name="system_edit">Edit</string>
     <string name="system_complete">Complete</string>
+
     <string name="system_select_date">Select date</string>
+    <string name="system_select_time">"Select Appointment time"</string>
+
+    <string name="notification_message">Time to note the stats of the day</string>
 
     <string name="system_not_found_active_habit">No active habits found.</string>
     <string name="system_not_found_habit_go_active">Go to the archive.</string>

@@ -217,6 +217,7 @@ class GlobalFragment : Fragment() {
                     adapter.updateList(listHabitCard)
                 }
             }
+            Log.d("Adapter", "${adapter.listHabit.size}")
         }
     }
 }
