@@ -194,7 +194,9 @@ class StatisticFragment : Fragment() {
             val lineList = ArrayList<Pair<String, Float>>()
             val list = dao.selectPeriodForWater(listDate.get("month")!!.toLong(), (listDate.get("today")?.plus(1))!!.toLong())
             list.forEach {
-                val date = SimpleDateFormat("dd").format(Date(it.day_date))
+                var date = SimpleDateFormat("dd").format(Date(it.day_date))
+                if(date.startsWith("0"))
+                    date = date.substring(1).toString()
                 lineList.add(Pair(date, it.day_result.toFloat()))
                 Log.d("line chart", "${it.day_date}, ${it.day_result}")
             }

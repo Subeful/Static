@@ -13,8 +13,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
+import android.util.Patterns
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.subefu.statik.R
@@ -49,11 +51,9 @@ class NotificationReceiver : BroadcastReceiver() {
             .setContentIntent(resultPendingIntent)
             .build()
 
-        notificationManager.notify(1, notification)
-
-
         if(config.getString(Constant.NOTIFY_ENABLE, "false") == "true"){
             Log.d("ENABLE", config.getString(Constant.NOTIFY_ENABLE, "false").toString())
+            notificationManager.notify(1, notification)
             setNotificationRecevier(context, java.util.Date().time + 1000 * 60 * 60 * 24)
         }
     }

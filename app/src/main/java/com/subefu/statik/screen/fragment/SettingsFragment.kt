@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -18,14 +19,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -47,6 +49,7 @@ class SettingsFragment : Fragment() {
 
     lateinit var functionUpdateFragment: UpdateFragment
 
+    @SuppressLint("InlinedApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSettingsBinding.inflate(inflater)
 
@@ -57,7 +60,17 @@ class SettingsFragment : Fragment() {
 
         binding.setCustomLanguage.setOnClickListener { showChooseLanguage() }
 
-        binding.setNotify.setOnClickListener { showNotificationConfig() }
+        binding.setNotify.setOnClickListener {
+            var permissionStatus = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+            if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+                showNotificationConfig()
+            } else {
+                config.edit().putString(Constant.NOTIFY_ENABLE, "false").apply()
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    0);
+            }
+
+        }
 
         binding.setServiceShare.setOnClickListener { showShare() }
         binding.setServiceFeedback.setOnClickListener { showFeedback() }
@@ -110,24 +123,20 @@ class SettingsFragment : Fragment() {
     fun showShare(){
         val sendIntent = Intent()
         sendIntent.setAction(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Приложение Statik, скачивай от сюда - https://youtu.be/dQw4w9WgXcQ")
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Приложение Statik, скачивай от сюда - https://disk.yandex.ru/d/KUQI-ElmywjZ2g")
         sendIntent.setType("text/plain")
         startActivity(Intent.createChooser(sendIntent, "Поделиться"))
     }
 
     @SuppressLint("QueryPermissionsNeeded")
     fun showFeedback(){
-        val shareIntent = ShareCompat.IntentBuilder(requireContext())
-            .setEmailTo(arrayOf("subefu@mail.ru"))
-            .setType("text/plain")
-            .setChooserTitle("Выберите приложение для отправки электронной почты")
-            .setSubject(requireContext().getString(R.string.set_service_feedback_title))
-            .setText(requireContext().getString(R.string.set_service_feedback_message))
-        if (requireContext().getPackageManager() != null){
-            shareIntent.startChooser()
+        val shareIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("subefu@mail.ru"))
+            putExtra(Intent.EXTRA_SUBJECT, requireContext().getString(R.string.set_service_feedback_title))
+            putExtra(Intent.EXTRA_TEXT, requireContext().getString(R.string.set_service_feedback_message))
         }
-
-
+            startActivity(shareIntent)
     }
 
     @SuppressLint("MissingInflatedId", "NewApi")
@@ -209,6 +218,7 @@ class SettingsFragment : Fragment() {
             calendar.set(Calendar.MINUTE, timePicker.minute);
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
+
             timeAlarm = calendar.timeInMillis
         }
 
@@ -223,10 +233,20 @@ class SettingsFragment : Fragment() {
         }
 
         complete.setOnClickListener {
-            config.edit().putLong(Constant.NOTIFY_TIME, timeAlarm).apply()
-            config.edit().putString(Constant.NOTIFY_ENABLE, "true").apply()
-            setNotificationRecevier(requireContext(), timeAlarm)
-            Log.d("Alarm", SimpleDateFormat("HH:mm:ss").format(Date(timeAlarm)))
+            if(notifyEnable.isChecked){
+                if(timeAlarm == 0L){
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.HOUR_OF_DAY, 22);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    timeAlarm = calendar.timeInMillis
+                }
+                config.edit().putLong(Constant.NOTIFY_TIME, timeAlarm).apply()
+                config.edit().putString(Constant.NOTIFY_ENABLE, "true").apply()
+                setNotificationRecevier(requireContext(), timeAlarm)
+                Log.d("Alarm", SimpleDateFormat("HH:mm:ss").format(Date(timeAlarm)))
+            }
             dialog.cancel()
         }
 

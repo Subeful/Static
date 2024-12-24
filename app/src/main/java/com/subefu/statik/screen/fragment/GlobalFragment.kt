@@ -57,7 +57,7 @@ class GlobalFragment : Fragment() {
             requireContext().startActivity(intent)
         }
 
-        binding.globalCalendar.setOnClickListener {
+        /*binding.globalCalendar.setOnClickListener {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText(requireContext().getString(R.string.system_select_date))
@@ -76,7 +76,7 @@ class GlobalFragment : Fragment() {
                 remakeFragment.setFragment(GlobalFragment())
             }
             datePicker.show(parentFragmentManager.beginTransaction(), "tag")
-        }
+        }*/
 
         return binding.root
     }
